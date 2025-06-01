@@ -5,7 +5,7 @@
 package BLL;
 
 import Config.ConnectDB;
-import DAL.loaisanphamDAL;
+import DAL.LoaiSanPham;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +19,7 @@ import java.util.List;
  * @author Windows
  */
 public class loaisanphamBLL {
-    public List<loaisanphamDAL> getAllCategory() throws SQLException {
+    public List<LoaiSanPham> getAllCategory() throws SQLException {
         ConnectDB connection= new ConnectDB();
         Connection conn = connection.getConnection();
         if (conn == null) {
@@ -29,10 +29,10 @@ public class loaisanphamBLL {
         String sql = "SELECT * FROM loaisanpham";
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
-        List<loaisanphamDAL> categorys = new ArrayList<>();
+        List<LoaiSanPham> categorys = new ArrayList<>();
 
         while (rs.next()) {
-            loaisanphamDAL category = new loaisanphamDAL(
+            LoaiSanPham category = new LoaiSanPham(
                 rs.getInt("maloai"),
                 rs.getString("tenloai")
                 
@@ -46,25 +46,25 @@ public class loaisanphamBLL {
         return categorys;
     }
     
-    public boolean insertCategory(loaisanphamDAL p) throws SQLException {
+    public boolean insertCategory(LoaiSanPham p) throws SQLException {
         ConnectDB connection= new ConnectDB();
         Connection conn = connection.getConnection();
         String sql = "INSERT INTO loaisanpham  (maloai,tenloai) VALUES ( ?, ?)";
         PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setInt(1, p.getMaloai());
-        ps.setString(2, p.getTenloai());
+        ps.setInt(1, p.getMaLoai());
+        ps.setString(2, p.getTenLoai());
         int rows = ps.executeUpdate();
         ps.close();
         return rows > 0;
         
     }
-    public boolean updateCategory(loaisanphamDAL p) throws SQLException {
+    public boolean updateCategory(LoaiSanPham p) throws SQLException {
         ConnectDB connection= new ConnectDB();
         Connection conn = connection.getConnection();
         String sql = "Update loaisanpham Set tenloai=? where maloai=?";
         PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setInt(2, p.getMaloai());
-        ps.setString(1, p.getTenloai());
+        ps.setInt(2, p.getMaLoai());
+        ps.setString(1, p.getTenLoai());
         int rows = ps.executeUpdate();
         ps.close();
         return rows > 0;

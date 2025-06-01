@@ -2,44 +2,44 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Model;
+package DAL;
 
 /**
  *
  * @author Ngoc
  */
-public class KhachHang {
-    private String maKh;
-    private String tenKh;
+public class NhaCungCap {
+    private String maNcc;
+    private String tenNcc;
     private String email;
     private String sdt;
     private String diaChi;
 
-    public KhachHang(String maKh, String tenKh, String email, String sdt, String diaChi) {
-        this.maKh = maKh;
-        this.tenKh = tenKh;
+    public NhaCungCap(String maNcc, String tenNcc, String email, String sdt, String diaChi) {
+        this.maNcc = maNcc;
+        this.tenNcc = tenNcc;
         this.email = email;
         this.sdt = sdt;
         this.diaChi = diaChi;
     }
 
-    public KhachHang() {
+    public NhaCungCap() {
     }
 
-    public String getMaKh() {
-        return maKh;
+    public String getMaNcc() {
+        return maNcc;
     }
 
-    public void setMaKh(String maKh) {
-        this.maKh = maKh;
+    public void setMaNcc(String maNcc) {
+        this.maNcc = maNcc;
     }
 
-    public String getTenKh() {
-        return tenKh;
+    public String getTenNcc() {
+        return tenNcc;
     }
 
-    public void setTenKh(String tenKh) {
-        this.tenKh = tenKh;
+    public void setTenNcc(String tenNcc) {
+        this.tenNcc = tenNcc;
     }
 
     public String getEmail() {
@@ -68,7 +68,7 @@ public class KhachHang {
 
     @Override
     public String toString() {
-        return "KhachHang{" + "maKh=" + maKh + ", tenKh=" + tenKh + ", email=" + email + ", sdt=" + sdt + ", diaChi=" + diaChi + '}';
+        return "NhaCungCap{" + "maNcc=" + maNcc + ", tenNcc=" + tenNcc + ", email=" + email + ", sdt=" + sdt + ", diaChi=" + diaChi + '}';
     }
     
     

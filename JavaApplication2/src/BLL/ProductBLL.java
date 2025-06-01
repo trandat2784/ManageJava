@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package BLL;
-import DAL.ProductDAL;
+import DAL.SanPham;
 import Config.ConnectDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,27 +19,27 @@ import java.util.List;
  * @author Windows
  */
 public class ProductBLL {
-     public List<ProductDAL> getAllProduct() throws SQLException {
+     public List<SanPham> getAllProduct() throws SQLException {
         ConnectDB connection= new ConnectDB();
         Connection conn = connection.getConnection();
         if (conn == null) {
           System.out.println("❌ Kết nối thất bại, conn = null tại HomeDAO");
          return new ArrayList<>(); // tránh lỗi tiếp theo
 }
-        String sql = "SELECT * FROM Product";
+        String sql = "SELECT * FROM sanpham";
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
-        List<ProductDAL> products = new ArrayList<>();
+        List<SanPham> products = new ArrayList<>();
 
         while (rs.next()) {
-            ProductDAL product = new ProductDAL(
-                rs.getInt("ProductID"),
-                rs.getString("ProductName"), 
-                rs.getInt("CategoryID"),
-                rs.getInt("SupplierID"),
-                rs.getInt("Price"),
-                rs.getInt("StockQuantity"),
-                rs.getString("ImagePath")
+            SanPham product = new SanPham(
+                rs.getString("masanpham"),
+                rs.getString("tensanpham"), 
+                rs.getInt("maloai"),
+                rs.getString("mancc"),
+                rs.getInt("gia"),
+                rs.getInt("soluongton"),
+                rs.getString("duongdananh")
             );
             products.add(product);
         }
@@ -50,44 +50,45 @@ public class ProductBLL {
         return products;
     }
     
-    public boolean insertProduct(ProductDAL p) throws SQLException {
+    public boolean insertProduct(SanPham p) throws SQLException {
         ConnectDB connection= new ConnectDB();
         Connection conn = connection.getConnection();
-        String sql = "INSERT INTO Product  (ProductName,CategoryID,SupplierID,Price,StockQuantity,ImagePath) VALUES ( ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO sanpham  (masanpham,tensanpham,maloai,mancc,gia,soluongton,duongdananh) VALUES ( ?, ?, ?, ?, ?, ?,?)";
         PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setString(1, p.getProductName());
-        ps.setInt(2, p.getCategoryID());
-        ps.setInt(3, p.getSupplierID());
-        ps.setInt(4, p.getPrice());
-        ps.setInt(5, p.getStockQuantity());
-        ps.setString(6, p.getImagePath());
+        ps.setString(1, p.getMaSanPham());
+        ps.setString(2, p.getTenSanPham());
+        ps.setInt(3, p.getMaLoai());
+        ps.setString(4, p.getMaNcc());
+        ps.setFloat(5, p.getGia());
+        ps.setInt(6, p.getSoLuongTon());
+        ps.setString(7, p.getDuongDanAnh());
         int rows = ps.executeUpdate();
         ps.close();
         return rows > 0;
         
     }
-    public boolean updateProduct(ProductDAL p) throws SQLException {
+    public boolean updateProduct(SanPham p) throws SQLException {
         ConnectDB connection= new ConnectDB();
         Connection conn = connection.getConnection();
-        String sql = "Update Product Set ProductName=?,CategoryID=?,SupplierID=?,Price=?,StockQuantity=?,ImagePath=? where ProductID=?";
+        String sql = "Update sanpham Set tensanpham=?,maloai=?,mancc=?,gia=?,soluongton=?,duongdananh=? where masanpham=?";
         PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setInt(7, p.getProductID());
-        ps.setString(1, p.getProductName());
-        ps.setInt(2, p.getCategoryID());
-        ps.setInt(3, p.getSupplierID());
-        ps.setInt(4, p.getPrice());
-        ps.setInt(5, p.getStockQuantity());
-        ps.setString(6, p.getImagePath());
+        ps.setString(7, p.getMaSanPham());
+        ps.setString(1, p.getTenSanPham());
+        ps.setInt(2, p.getMaLoai());
+        ps.setString(3, p.getMaNcc());
+        ps.setFloat(4, p.getGia());
+        ps.setInt(5, p.getSoLuongTon());
+        ps.setString(6, p.getDuongDanAnh());
         int rows = ps.executeUpdate();
         ps.close();
         return rows > 0;
     }
-     public boolean deleteProduct(int ProductID) throws SQLException {
+     public boolean deleteProduct(String ProductID) throws SQLException {
         ConnectDB connection= new ConnectDB();
         Connection conn = connection.getConnection();
-         String sql = "DELETE FROM Product WHERE ProductID=?";
+         String sql = "DELETE FROM sanpham WHERE masanpham=?";
         PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setInt(1, ProductID);
+        ps.setString(1, ProductID);
         int rows = ps.executeUpdate();
         ps.close();
         conn.close();

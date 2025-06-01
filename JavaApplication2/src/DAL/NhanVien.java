@@ -2,44 +2,44 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Model;
+package DAL;
 
 /**
  *
  * @author Ngoc
  */
-public class NhaCungCap {
-    private String maNcc;
-    private String tenNcc;
+public class NhanVien {
+    private String maNv;
+    private String tenNv;
     private String email;
     private String sdt;
     private String diaChi;
 
-    public NhaCungCap(String maNcc, String tenNcc, String email, String sdt, String diaChi) {
-        this.maNcc = maNcc;
-        this.tenNcc = tenNcc;
+    public NhanVien(String maNv, String tenNv, String email, String sdt, String diaChi) {
+        this.maNv = maNv;
+        this.tenNv = tenNv;
         this.email = email;
         this.sdt = sdt;
         this.diaChi = diaChi;
     }
 
-    public NhaCungCap() {
+    public NhanVien() {
     }
 
-    public String getMaNcc() {
-        return maNcc;
+    public String getMaNv() {
+        return maNv;
     }
 
-    public void setMaNcc(String maNcc) {
-        this.maNcc = maNcc;
+    public void setMaNv(String maNv) {
+        this.maNv = maNv;
     }
 
-    public String getTenNcc() {
-        return tenNcc;
+    public String getTenNv() {
+        return tenNv;
     }
 
-    public void setTenNcc(String tenNcc) {
-        this.tenNcc = tenNcc;
+    public void setTenNv(String tenNv) {
+        this.tenNv = tenNv;
     }
 
     public String getEmail() {
@@ -68,7 +68,7 @@ public class NhaCungCap {
 
     @Override
     public String toString() {
-        return "NhaCungCap{" + "maNcc=" + maNcc + ", tenNcc=" + tenNcc + ", email=" + email + ", sdt=" + sdt + ", diaChi=" + diaChi + '}';
+        return "NhanVien{" + "maNv=" + maNv + ", tenNv=" + tenNv + ", email=" + email + ", sdt=" + sdt + ", diaChi=" + diaChi + '}';
     }
     
     
