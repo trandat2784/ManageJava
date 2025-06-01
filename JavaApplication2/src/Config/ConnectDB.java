@@ -6,6 +6,7 @@ package Config;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
@@ -18,9 +19,9 @@ public class ConnectDB {
     public ConnectDB() {
     try {
         String url = "jdbc:sqlserver://localhost:1433;"
-                  + "databaseName=QuanLiBanHang3;"
+                  + "databaseName=CSDL_QLBHNT;"
                   + "user=sa;"
-                  + "password=ngocngoc;"
+                  + "password=12345678;"
                   + "encrypt=true;trustServerCertificate=true";
         this.con = DriverManager.getConnection(url);
         
@@ -38,7 +39,6 @@ public class ConnectDB {
     public Connection getConnection() {
         return this.con;
     }
-    public static void main(String[] args) {
-    new ConnectDB(); // Tự động kiểm tra kết nối khi khởi tạo
-}
+   
+   
 }
