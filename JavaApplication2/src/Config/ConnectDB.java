@@ -18,7 +18,7 @@ public class ConnectDB {
     public ConnectDB() {
     try {
         String url = "jdbc:sqlserver://localhost:1433;"
-                  + "databaseName=QuanLiBanHang3;"
+                  + "databaseName=csdlqlbhnt2;"
                   + "user=sa;"
                   + "password=ngocngoc;"
                   + "encrypt=true;trustServerCertificate=true";
