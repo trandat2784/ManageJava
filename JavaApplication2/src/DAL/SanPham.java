@@ -4,6 +4,9 @@
  */
 package DAL;
 
+import BLL.SanPhamBLL;
+import java.util.ArrayList;
+
 /**
  *
  * @author Ngoc
@@ -89,6 +92,10 @@ public class SanPham {
     @Override
     public String toString() {
         return "SanPham{" + "maSanPham=" + maSanPham + ", tenSanPham=" + tenSanPham + ", maLoai=" + maLoai + ", maNcc=" + maNcc + ", gia=" + gia + ", soLuongTon=" + soLuongTon + ", duongDanAnh=" + duongDanAnh + '}';
+    }
+
+    public ArrayList<SanPhamBLL> docdanhsachsanphamtheodm(String tenLoai) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     

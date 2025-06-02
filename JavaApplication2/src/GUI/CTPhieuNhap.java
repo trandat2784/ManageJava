@@ -1,0 +1,345 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package GUI;
+
+import BLL.ChiTietPhieuNhapBLL;
+import BLL.DinhDangPDF;
+import BLL.SanPhamBLL;
+import DAL.ChiTietPhieuNhap;
+import DAL.PhieuNhap;
+import com.formdev.flatlaf.FlatLightLaf;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author Ngoc
+ */
+public class CTPhieuNhap extends javax.swing.JFrame {
+
+        private PhieuNhapGUI parent;
+
+   public CTPhieuNhap(PhieuNhapGUI parent, JFrame ownerFrame, boolean rootPaneCheckingEnabled) {
+    // Khởi tạo các thành phần UI
+    initComponents();
+    //setLocationRelativeTo(ownerFrame); // Sử dụng ownerFrame để căn giữa
+    
+    // Lưu tham chiếu đến parent form
+    this.parent = parent;
+    
+    // Kiểm tra và xử lý khi parent null
+    if (parent == null) {
+        handleNullParentCase();
+    } else {
+        try {
+            loadDataFromParent();
+        } catch (Exception e) {
+            handleDataLoadError(e);
+        }
+    }
+    
+    // Tải dữ liệu sản phẩm và thiết lập bảng
+    loadDataToTableProduct();
+    setWidthTable();
+}
+
+  private void handleNullParentCase() {
+    // Thiết lập giá trị mặc định cho các label khi không có parent
+    labelMaPhieu.setText("[KHÔNG CÓ DỮ LIỆU]");
+    labelTongTien.setText("0đ");
+    labelNhaCungCap.setText("[KHÔNG XÁC ĐỊNH]");
+    labelThoiGianTao.setText(new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+    
+    // Hiển thị cảnh báo
+    JOptionPane.showMessageDialog(this, 
+        "Chế độ xem độc lập - Không có kết nối với form chính", 
+        "Thông báo", 
+        JOptionPane.INFORMATION_MESSAGE);
+}
+
+private void loadDataFromParent() {
+    // Lấy thông tin phiếu nhập từ parent form
+    PhieuNhap pn = parent.getPhieuNhapSelect();
+    
+    if (pn == null) {
+        throw new IllegalStateException("Không có phiếu nhập nào được chọn");
+    }
+    
+    // Định dạng và hiển thị dữ liệu
+    labelMaPhieu.setText(pn.getMaPhieu());
+    labelTongTien.setText(String.format("%sđ", parent.getFormatter().format(pn.getTongTien())));
+    labelNhaCungCap.setText(pn.getNhaCungCap());
+    labelThoiGianTao.setText(parent.getFormatDate().format(pn.getThoiGianTao()));
+}
+
+private void handleDataLoadError(Exception e) {
+    // Ghi log lỗi
+    Logger.getLogger(CTPhieuNhap.class.getName()).log(Level.SEVERE, "Lỗi khi tải dữ liệu", e);
+    
+    // Hiển thị thông báo lỗi
+    JOptionPane.showMessageDialog(this,
+        "Lỗi khi tải dữ liệu từ form chính: " + e.getMessage(),
+        "Lỗi",
+        JOptionPane.ERROR_MESSAGE);
+    
+    // Đặt giá trị mặc định
+    labelMaPhieu.setText("[LỖI]");
+    labelTongTien.setText("[LỖI]");
+    labelNhaCungCap.setText("[LỖI]");
+    labelThoiGianTao.setText("[LỖI]");
+}
+
+
+    
+
+     private void openFile(String file) {
+        try {
+            File path = new File(file);
+            Desktop.getDesktop().open(path);
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void setWidthTable() {
+        tblChiTietPhieu.getColumnModel().getColumn(0).setPreferredWidth(5);
+        tblChiTietPhieu.getColumnModel().getColumn(1).setPreferredWidth(10);
+        tblChiTietPhieu.getColumnModel().getColumn(2).setPreferredWidth(250);
+    }
+
+    public void loadDataToTableProduct() {
+        try {
+            
+            ArrayList<ChiTietPhieuNhap> CTPhieu = ChiTietPhieuNhapBLL.getInstance().selectAll(this.parent.getPhieuNhapSelect().getMaPhieu().toString());
+            DefaultTableModel tblCTPhieumd = (DefaultTableModel) tblChiTietPhieu.getModel();
+            tblCTPhieumd.setRowCount(0);
+            for (int i = 0; i < CTPhieu.size(); i++) {
+                tblCTPhieumd.addRow(new Object[]{
+                    i + 1, 
+                    CTPhieu.get(i).getMaSanPham(),
+                    SanPhamBLL.getInstance().selectById(CTPhieu.get(i).getMaSanPham()).getTenSanPham(),
+                    CTPhieu.get(i).getSoLuong(),
+                    parent.getFormatter().format(CTPhieu.get(i).getDonGia()) + "đ",
+                    parent.getFormatter().format(CTPhieu.get(i).getDonGia() * CTPhieu.get(i).getSoLuong()) + "đ"
+                });
+            }
+        } catch (Exception e) {
+        }
+    }
+    
+    
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jLabel1 = new javax.swing.JLabel();
+        labelMaPhieu = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        labelNhaCungCap = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        labelNguoiTao = new javax.swing.JLabel();
+        labelThoiGianTao = new javax.swing.JLabel();
+        labelTongTien = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        exportPDF = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblChiTietPhieu = new javax.swing.JTable();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 0, 51));
+        jLabel1.setText("THÔNG TIN PHIẾU NHẬP");
+
+        labelMaPhieu.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        labelMaPhieu.setForeground(new java.awt.Color(0, 51, 204));
+        labelMaPhieu.setText("jLabel2");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 21)); // NOI18N
+        jLabel2.setText("MÃ PHIẾU");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 21)); // NOI18N
+        jLabel3.setText("NHÀ CUNG CẤP");
+
+        labelNhaCungCap.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        labelNhaCungCap.setForeground(new java.awt.Color(0, 51, 204));
+        labelNhaCungCap.setText("jLabel4");
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 21)); // NOI18N
+        jLabel4.setText("NGƯỜI TẠO");
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 21)); // NOI18N
+        jLabel5.setText("THỜI GIAN TẠO");
+
+        labelNguoiTao.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        labelNguoiTao.setForeground(new java.awt.Color(0, 51, 204));
+        labelNguoiTao.setText("Cửa hàng nội thất");
+
+        labelThoiGianTao.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        labelThoiGianTao.setForeground(new java.awt.Color(0, 51, 204));
+        labelThoiGianTao.setText("jLabel7");
+
+        labelTongTien.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        labelTongTien.setForeground(new java.awt.Color(255, 0, 0));
+        labelTongTien.setText("jLabel6");
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 21)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel6.setText("TỔNG TIỀN");
+
+        exportPDF.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        exportPDF.setText("XUẤT PDF");
+        exportPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportPDFActionPerformed(evt);
+            }
+        });
+
+        tblChiTietPhieu.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        tblChiTietPhieu.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblChiTietPhieu);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(labelNhaCungCap)
+                        .addGap(68, 68, 68)
+                        .addComponent(jLabel5)
+                        .addGap(17, 17, 17)
+                        .addComponent(labelThoiGianTao))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(jLabel6)
+                        .addGap(16, 16, 16)
+                        .addComponent(labelTongTien)
+                        .addGap(238, 238, 238)
+                        .addComponent(exportPDF))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(jLabel2)
+                        .addGap(16, 16, 16)
+                        .addComponent(labelMaPhieu)
+                        .addGap(128, 128, 128)
+                        .addComponent(jLabel4)
+                        .addGap(28, 28, 28)
+                        .addComponent(labelNguoiTao))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(134, 134, 134)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(50, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel2))
+                    .addComponent(labelMaPhieu)
+                    .addComponent(jLabel4)
+                    .addComponent(labelNguoiTao))
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(labelNhaCungCap))
+                    .addComponent(jLabel5)
+                    .addComponent(labelThoiGianTao))
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(labelTongTien)
+                    .addComponent(exportPDF))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void exportPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportPDFActionPerformed
+        // TODO add your handling code here:
+        DinhDangPDF writepdf = new DinhDangPDF();
+        writepdf.writePhieuNhap(this.parent.getPhieuNhapSelect().getMaPhieu());
+    }//GEN-LAST:event_exportPDFActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) throws UnsupportedLookAndFeelException {
+        UIManager.setLookAndFeel(new FlatLightLaf());
+    
+    java.awt.EventQueue.invokeLater(new Runnable() {
+        public void run() {
+            // Tạo dialog với parent = null nếu không cần
+            CTPhieuNhap dialog = new CTPhieuNhap(null, null, true);
+            dialog.setVisible(true);
+        }
+    });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton exportPDF;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelMaPhieu;
+    private javax.swing.JLabel labelNguoiTao;
+    private javax.swing.JLabel labelNhaCungCap;
+    private javax.swing.JLabel labelThoiGianTao;
+    private javax.swing.JLabel labelTongTien;
+    private javax.swing.JTable tblChiTietPhieu;
+    // End of variables declaration//GEN-END:variables
+}

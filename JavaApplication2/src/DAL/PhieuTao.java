@@ -5,44 +5,27 @@
 package DAL;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Ngoc
  */
-public class PhieuNhap {
-    
-    private String nhaCungCap;
-    private String maPhieu;
+public class PhieuTao {
+     private String maPhieu;
     private Timestamp thoiGianTao;
     private ArrayList<ChiTietPhieuNhap> CTPhieu;
     private double tongTien;
-
-    public PhieuNhap(String nhaCungCap, String maPhieu, Timestamp thoiGianTao, ArrayList<ChiTietPhieuNhap> CTPhieu, double tongTien) {
-        this.nhaCungCap = nhaCungCap;
-        this.maPhieu = maPhieu;
-        this.thoiGianTao = thoiGianTao;
-        this.CTPhieu = CTPhieu;
-        this.tongTien = tongTien;
-    }
-
-    public PhieuNhap() {
-    }
-
-    public PhieuNhap(String maPhieu, Timestamp thoiGianTao, ArrayList<ChiTietPhieuNhap> CTPhieu, double tongTien) {
-        this.maPhieu = maPhieu;
-        this.thoiGianTao = thoiGianTao;
-        this.CTPhieu = CTPhieu;
-        this.tongTien = tongTien;
-    }
-
     
+    public PhieuTao(String maPhieu, Timestamp thoiGianTao, ArrayList<ChiTietPhieuNhap> CTPhieu, double tongTien) {
+        this.maPhieu = maPhieu;
+        this.thoiGianTao = thoiGianTao;
+        this.CTPhieu = CTPhieu;
+        this.tongTien = tongTien;
+    }
 
-    public PhieuNhap(String maPhieu, Timestamp thoiGianTao, double tongTien) {
+    public PhieuTao(String maPhieu, Timestamp thoiGianTao, double tongTien) {
         this.maPhieu = maPhieu;
         this.thoiGianTao = thoiGianTao;
         this.tongTien = tongTien;
@@ -98,7 +81,7 @@ public class PhieuNhap {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final PhieuNhap other = (PhieuNhap) obj;
+        final PhieuTao other = (PhieuTao) obj;
         if (Double.doubleToLongBits(this.tongTien) != Double.doubleToLongBits(other.tongTien)) {
             return false;
         }
@@ -116,33 +99,4 @@ public class PhieuNhap {
         return "Phieu{" + "maPhieu=" + maPhieu + ", thoiGianTao=" + thoiGianTao + ",  CTPhieu=" + CTPhieu + ", tongTien=" + tongTien + '}';
     }
 
-
-    
-
-    
-
-    public PhieuNhap(String nhaCungCap) {
-        this.nhaCungCap = nhaCungCap;
-    }
-
- 
-  
-
-
-  
-    public String getNhaCungCap() {
-        return nhaCungCap;
-    }
-
-    public void setNhaCungCap(String nhaCungCap) {
-        this.nhaCungCap = nhaCungCap;
-    }
-
-    
-
-    
-
-   
-    
-    
 }
