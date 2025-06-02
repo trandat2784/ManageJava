@@ -19,8 +19,6 @@ import java.util.ArrayList;
  */
 public class PhieuNhapBLL implements GDBLL<PhieuNhap> {
     
-
-    
     public static PhieuNhapBLL getInstance() {
         return new PhieuNhapBLL();
     }
@@ -38,7 +36,6 @@ public class PhieuNhapBLL implements GDBLL<PhieuNhap> {
             ketQua = pst.executeUpdate();
             ConnectDB.closeConnection(con);
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
         }
         return ketQua;
@@ -60,7 +57,6 @@ public class PhieuNhapBLL implements GDBLL<PhieuNhap> {
                 ketQua = new PhieuNhap(maNcc, maPhieu, thoiGianTao, ChiTietPhieuNhapBLL.getInstance().selectAll(maPhieu), tongTien);
             }
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
         }
         return ketQua;
@@ -82,12 +78,10 @@ public class PhieuNhapBLL implements GDBLL<PhieuNhap> {
                 ketQua.add(p);
             }
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
         }
         return ketQua;
     }
-
     
     public int update(PhieuNhap t) {
         int ketQua = 0;
@@ -103,7 +97,6 @@ public class PhieuNhapBLL implements GDBLL<PhieuNhap> {
             ketQua = pst.executeUpdate();
             ConnectDB.closeConnection(con);
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
         }
         return ketQua;
@@ -119,7 +112,6 @@ public class PhieuNhapBLL implements GDBLL<PhieuNhap> {
             ketQua = pst.executeUpdate();
             ConnectDB.closeConnection(con);
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
         }
         return ketQua;
@@ -141,7 +133,6 @@ public class PhieuNhapBLL implements GDBLL<PhieuNhap> {
                 ketQua.add(p);
             }
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
         }
         return ketQua;
@@ -162,7 +153,6 @@ public class PhieuNhapBLL implements GDBLL<PhieuNhap> {
                 ketQua.add(p);
             }
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
         }
         return ketQua;

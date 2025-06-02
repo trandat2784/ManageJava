@@ -20,9 +20,9 @@ import javax.swing.DefaultListModel;
  * @author Ngoc
  */
 public class LoaiSanPhamBLL extends ConnectDB {
+    
    public Vector<LoaiSanPham> docdanhmuc() {
         Vector<LoaiSanPham> vec = new Vector<LoaiSanPham>();
-
         try {
             Connection con = ConnectDB.getConnection();
             String sql = "select * from loaisanpham";
@@ -35,7 +35,6 @@ public class LoaiSanPhamBLL extends ConnectDB {
                 dm.setTenLoai(rs.getString(2));
                 vec.add(dm);
             }
-
             rs.close();
             stmt.close();
         } catch (Exception ex) {

@@ -95,11 +95,7 @@ public class SanPhamBLL extends ConnectDB {
     }
     return dssp;
 }
-    
-    
-    
-    
-    
+       
     public ArrayList<SanPham> selectAllExist() {
         Connection con = ConnectDB.getConnection();
         ArrayList<SanPham> ketQua = new ArrayList<SanPham>();
@@ -121,16 +117,10 @@ public class SanPhamBLL extends ConnectDB {
             }
             ConnectDB.closeConnection(con);
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
         }
         return ketQua;
-    }
-    
-    
-    
-    
-    
+    }    
     
     public static SanPhamBLL getInstance() {
         return new SanPhamBLL();
@@ -168,7 +158,6 @@ public class SanPhamBLL extends ConnectDB {
             }
             ConnectDB.closeConnection(con);
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
         }
         return ketQua;

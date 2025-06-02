@@ -304,8 +304,6 @@ public class DinhDangPDF {
         }
     }
     
-   
-
     private void openFile(String file) {
         try {
             File path = new File(file);

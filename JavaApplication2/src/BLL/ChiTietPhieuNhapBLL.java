@@ -11,10 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-/**
- *
- * @author Ngoc
- */
 public class ChiTietPhieuNhapBLL extends ConnectDB {
     
     public static ChiTietPhieuNhapBLL getInstance() {
@@ -40,7 +36,7 @@ public class ChiTietPhieuNhapBLL extends ConnectDB {
         return ketQua;
     }
     
-     public ArrayList<ChiTietPhieuNhap> selectAll(String t) {
+    public ArrayList<ChiTietPhieuNhap> selectAll(String t) {
          Connection con = ConnectDB.getConnection();
         ArrayList<ChiTietPhieuNhap> ketQua = new ArrayList<ChiTietPhieuNhap>();
         try {
