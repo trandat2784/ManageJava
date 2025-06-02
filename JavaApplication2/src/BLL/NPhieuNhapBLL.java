@@ -17,10 +17,10 @@ import java.util.ArrayList;
  *
  * @author Ngoc
  */
-public class PhieuNhapBLL implements GDBLL<PhieuNhap> {
+public class NPhieuNhapBLL implements GDBLL<PhieuNhap> {
     
-    public static PhieuNhapBLL getInstance() {
-        return new PhieuNhapBLL();
+    public static NPhieuNhapBLL getInstance() {
+        return new NPhieuNhapBLL();
     }
 
     public int insert(PhieuNhap t) {
@@ -54,7 +54,7 @@ public class PhieuNhapBLL implements GDBLL<PhieuNhap> {
                 Timestamp thoiGianTao = rs.getTimestamp("thoiGianTao");
                 String maNcc = rs.getString("maNcc");
                 double tongTien = rs.getDouble("tongTien");
-                ketQua = new PhieuNhap(maNcc, maPhieu, thoiGianTao, ChiTietPhieuNhapBLL.getInstance().selectAll(maPhieu), tongTien);
+                ketQua = new PhieuNhap(maNcc, maPhieu, thoiGianTao, NChiTietPhieuNhapBLL.getInstance().selectAll(maPhieu), tongTien);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -74,7 +74,7 @@ public class PhieuNhapBLL implements GDBLL<PhieuNhap> {
                 Timestamp thoiGianTao = rs.getTimestamp("thoiGianTao");
                 String maNcc = rs.getString("maNcc");
                 double tongTien = rs.getDouble("tongTien");
-                PhieuNhap p = new PhieuNhap(maNcc, maPhieu, thoiGianTao, ChiTietPhieuNhapBLL.getInstance().selectAll(maPhieu), tongTien);
+                PhieuNhap p = new PhieuNhap(maNcc, maPhieu, thoiGianTao, NChiTietPhieuNhapBLL.getInstance().selectAll(maPhieu), tongTien);
                 ketQua.add(p);
             }
         } catch (Exception e) {
@@ -129,7 +129,7 @@ public class PhieuNhapBLL implements GDBLL<PhieuNhap> {
                 String maPhieu = rs.getString("maPhieu");
                 Timestamp thoiGianTao = rs.getTimestamp("thoiGianTao");
                 double tongTien = rs.getDouble("tongTien");
-                PhieuTao p = new PhieuTao(maPhieu, thoiGianTao, ChiTietPhieuNhapBLL.getInstance().selectAll(maPhieu), tongTien);
+                PhieuTao p = new PhieuTao(maPhieu, thoiGianTao, NChiTietPhieuNhapBLL.getInstance().selectAll(maPhieu), tongTien);
                 ketQua.add(p);
             }
         } catch (Exception e) {
@@ -149,7 +149,7 @@ public class PhieuNhapBLL implements GDBLL<PhieuNhap> {
                 String maPhieu = rs.getString("maPhieu");
                 Timestamp thoiGianTao = rs.getTimestamp("thoiGianTao");
                 double tongTien = rs.getDouble("tongTien");
-                PhieuTao p = new PhieuTao(maPhieu, thoiGianTao, ChiTietPhieuNhapBLL.getInstance().selectAll(maPhieu), tongTien);
+                PhieuTao p = new PhieuTao(maPhieu, thoiGianTao, NChiTietPhieuNhapBLL.getInstance().selectAll(maPhieu), tongTien);
                 ketQua.add(p);
             }
         } catch (Exception e) {

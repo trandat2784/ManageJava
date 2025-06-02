@@ -17,7 +17,7 @@ import java.util.ArrayList;
  *
  * @author Ngoc
  */
-public class SanPhamBLL extends ConnectDB {
+public class NSanPhamBLL extends ConnectDB {
     
     public ArrayList<SanPham> docsanpham() {
         Connection con = ConnectDB.getConnection();
@@ -122,13 +122,13 @@ public class SanPhamBLL extends ConnectDB {
         return ketQua;
     }    
     
-    public static SanPhamBLL getInstance() {
-        return new SanPhamBLL();
+    public static NSanPhamBLL getInstance() {
+        return new NSanPhamBLL();
     }
     
     public SanPham TimKiemId(String text) {
         SanPham result = new SanPham();
-        ArrayList<SanPham> armt = SanPhamBLL.getInstance().selectAllExist();
+        ArrayList<SanPham> armt = NSanPhamBLL.getInstance().selectAllExist();
         for (var mt : armt) {
             if (mt.getMaSanPham().toLowerCase().contains(text.toLowerCase())) {
                 return mt;

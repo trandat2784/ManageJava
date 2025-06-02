@@ -4,9 +4,9 @@
  */
 package GUI;
 
-import BLL.ChiTietPhieuNhapBLL;
-import BLL.DinhDangPDF;
-import BLL.SanPhamBLL;
+import BLL.NChiTietPhieuNhapBLL;
+import BLL.NDinhDangPDF;
+import BLL.NSanPhamBLL;
 import DAL.ChiTietPhieuNhap;
 import DAL.PhieuNhap;
 import com.formdev.flatlaf.FlatLightLaf;
@@ -123,14 +123,14 @@ private void handleDataLoadError(Exception e) {
     public void loadDataToTableProduct() {
         try {
             
-            ArrayList<ChiTietPhieuNhap> CTPhieu = ChiTietPhieuNhapBLL.getInstance().selectAll(this.parent.getPhieuNhapSelect().getMaPhieu().toString());
+            ArrayList<ChiTietPhieuNhap> CTPhieu = NChiTietPhieuNhapBLL.getInstance().selectAll(this.parent.getPhieuNhapSelect().getMaPhieu().toString());
             DefaultTableModel tblCTPhieumd = (DefaultTableModel) tblChiTietPhieu.getModel();
             tblCTPhieumd.setRowCount(0);
             for (int i = 0; i < CTPhieu.size(); i++) {
                 tblCTPhieumd.addRow(new Object[]{
                     i + 1, 
                     CTPhieu.get(i).getMaSanPham(),
-                    SanPhamBLL.getInstance().selectById(CTPhieu.get(i).getMaSanPham()).getTenSanPham(),
+                    NSanPhamBLL.getInstance().selectById(CTPhieu.get(i).getMaSanPham()).getTenSanPham(),
                     CTPhieu.get(i).getSoLuong(),
                     parent.getFormatter().format(CTPhieu.get(i).getDonGia()) + "đ",
                     parent.getFormatter().format(CTPhieu.get(i).getDonGia() * CTPhieu.get(i).getSoLuong()) + "đ"
@@ -307,7 +307,7 @@ private void handleDataLoadError(Exception e) {
 
     private void exportPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportPDFActionPerformed
         // TODO add your handling code here:
-        DinhDangPDF writepdf = new DinhDangPDF();
+        NDinhDangPDF writepdf = new NDinhDangPDF();
         writepdf.writePhieuNhap(this.parent.getPhieuNhapSelect().getMaPhieu());
     }//GEN-LAST:event_exportPDFActionPerformed
 

@@ -42,7 +42,7 @@ import javax.swing.JOptionPane;
  *
  * @author Ngoc
  */
-public class DinhDangPDF {
+public class NDinhDangPDF {
     private final DecimalFormat formatter = new DecimalFormat("###,###,###");
     private final SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy HH:mm");
     private Document document;
@@ -61,7 +61,7 @@ public class DinhDangPDF {
     private static final BaseColor GRAY_COLOR = new BaseColor(245, 245, 245); // Màu xám nhạt #F5F5F5
     private static final BaseColor WHITE_COLOR = BaseColor.WHITE;
 
-    public DinhDangPDF() {
+    public NDinhDangPDF() {
         try {
             // Khởi tạo các font chữ
             BaseFont baseFont;
@@ -187,7 +187,7 @@ public class DinhDangPDF {
             setHeader("PHIẾU NHẬP HÀNG");
 
             // Lấy thông tin phiếu nhập
-            PhieuNhap pn = PhieuNhapBLL.getInstance().selectById(mapn);
+            PhieuNhap pn = NPhieuNhapBLL.getInstance().selectById(mapn);
 
             // Phần thông tin phiếu (căn chỉnh 2 cột)
             PdfPTable infoTable = new PdfPTable(2);
@@ -207,7 +207,7 @@ public class DinhDangPDF {
             Paragraph paraRight = new Paragraph();
             paraRight.setFont(fontData);
             paraRight.setAlignment(Element.ALIGN_RIGHT);
-            paraRight.add("Nhà cung cấp: " + NhaCungCapBLL.getInstance().selectById(pn.getNhaCungCap()).getTenNcc());
+            paraRight.add("Nhà cung cấp: " + NNhaCungCapBLL.getInstance().selectById(pn.getNhaCungCap()).getTenNcc());
             cellRight.addElement(paraRight);
 
             infoTable.addCell(cellLeft);
@@ -233,8 +233,8 @@ public class DinhDangPDF {
             }
 
             // Dữ liệu chi tiết
-            for (ChiTietPhieuNhap ctpn : ChiTietPhieuNhapBLL.getInstance().selectAll(mapn)) {
-                SanPham mt = SanPhamBLL.getInstance().selectById(ctpn.getMaSanPham());
+            for (ChiTietPhieuNhap ctpn : NChiTietPhieuNhapBLL.getInstance().selectAll(mapn)) {
+                SanPham mt = NSanPhamBLL.getInstance().selectById(ctpn.getMaSanPham());
                 PdfPCell cell;
                 
                 cell = new PdfPCell(new Phrase(ctpn.getMaSanPham(), fontData));

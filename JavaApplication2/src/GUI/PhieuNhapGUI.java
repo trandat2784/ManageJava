@@ -4,9 +4,9 @@
  */
 package GUI;
 
-import BLL.ChiTietPhieuNhapBLL;
-import BLL.NhaCungCapBLL;
-import BLL.PhieuNhapBLL;
+import BLL.NChiTietPhieuNhapBLL;
+import BLL.NNhaCungCapBLL;
+import BLL.NPhieuNhapBLL;
 import DAL.ChiTietPhieuNhap;
 import DAL.PhieuNhap;
 import java.awt.Desktop;
@@ -64,14 +64,14 @@ public class PhieuNhapGUI extends javax.swing.JFrame   {
         
     }
    // Thêm vào constructor hoặc phương thức khởi tạo
-private void initComboBoxData() {
-    jComboBoxLuaChon.removeAllItems(); // Xóa hết item cũ nếu có
-    jComboBoxLuaChon.addItem("Tất cả");
-    jComboBoxLuaChon.addItem("Mã phiếu");
-    jComboBoxLuaChon.addItem("Nhà cung cấp");
-    jComboBoxLuaChon.setSelectedIndex(0); // Chọn mục đầu tiên
-}
- public final void initTable() {
+    private void initComboBoxData() {
+        jComboBoxLuaChon.removeAllItems(); // Xóa hết item cũ nếu có
+        jComboBoxLuaChon.addItem("Tất cả");
+        jComboBoxLuaChon.addItem("Mã phiếu");
+        jComboBoxLuaChon.addItem("Nhà cung cấp");
+        jComboBoxLuaChon.setSelectedIndex(0); // Chọn mục đầu tiên
+    }
+    public final void initTable() {
         tblModel = new DefaultTableModel();
         String[] headerTbl = new String[]{"STT", "Mã phiếu nhập", "Nhà cung cấp", "Thời gian tạo", "Tổng tiền"};
         tblModel.setColumnIdentifiers(headerTbl);
@@ -82,13 +82,13 @@ private void initComboBoxData() {
         tblPhieuNhap.getColumnModel().getColumn(3).setPreferredWidth(100);
     }
 
- public void loadDataToTable() {
+    public void loadDataToTable() {
         try {
-            ArrayList<PhieuNhap> allPhieuNhap = PhieuNhapBLL.getInstance().selectAll();
+            ArrayList<PhieuNhap> allPhieuNhap = NPhieuNhapBLL.getInstance().selectAll();
             tblModel.setRowCount(0);
             for (int i = 0; i < allPhieuNhap.size(); i++) {
                 tblModel.addRow(new Object[]{
-                    i + 1, allPhieuNhap.get(i).getMaPhieu(), NhaCungCapBLL.getInstance().selectById(allPhieuNhap.get(i).getNhaCungCap()).getTenNcc(), formatDate.format(allPhieuNhap.get(i).getThoiGianTao()), formatter.format(allPhieuNhap.get(i).getTongTien()) + "đ"
+                    i + 1, allPhieuNhap.get(i).getMaPhieu(), NNhaCungCapBLL.getInstance().selectById(allPhieuNhap.get(i).getNhaCungCap()).getTenNcc(), formatDate.format(allPhieuNhap.get(i).getThoiGianTao()), formatter.format(allPhieuNhap.get(i).getTongTien()) + "đ"
                 });
             }
         } catch (Exception e) {
@@ -101,7 +101,7 @@ private void initComboBoxData() {
             tblModel.setRowCount(0);
             for (int i = 0; i < result.size(); i++) {
                 tblModel.addRow(new Object[]{
-                    i + 1, result.get(i).getMaPhieu(), NhaCungCapBLL.getInstance().selectById(result.get(i).getNhaCungCap()).getTenNcc(), formatDate.format(result.get(i).getThoiGianTao()), formatter.format(result.get(i).getTongTien()) + "đ"
+                    i + 1, result.get(i).getMaPhieu(), NNhaCungCapBLL.getInstance().selectById(result.get(i).getNhaCungCap()).getTenNcc(), formatDate.format(result.get(i).getThoiGianTao()), formatter.format(result.get(i).getTongTien()) + "đ"
                 });
             }
         } catch (Exception e) {
@@ -110,7 +110,7 @@ private void initComboBoxData() {
     
     public ArrayList<PhieuNhap> searchTatCa(String text) {
         ArrayList<PhieuNhap> result = new ArrayList<>();
-        ArrayList<PhieuNhap> armt = PhieuNhapBLL.getInstance().selectAll();
+        ArrayList<PhieuNhap> armt = NPhieuNhapBLL.getInstance().selectAll();
         for (var phieu : armt) {
             if (phieu.getMaPhieu().toLowerCase().contains(text.toLowerCase())
                     || phieu.getNhaCungCap().toLowerCase().contains(text.toLowerCase())
@@ -124,7 +124,7 @@ private void initComboBoxData() {
 
     public ArrayList<PhieuNhap> searchMaPhieuNhap(String text) {
         ArrayList<PhieuNhap> result = new ArrayList<>();
-        ArrayList<PhieuNhap> armt = PhieuNhapBLL.getInstance().selectAll();
+        ArrayList<PhieuNhap> armt = NPhieuNhapBLL.getInstance().selectAll();
         for (var phieu : armt) {
             if (phieu.getMaPhieu().toLowerCase().contains(text.toLowerCase())) {
                 result.add(phieu);
@@ -136,7 +136,7 @@ private void initComboBoxData() {
 
     public ArrayList<PhieuNhap> searchNhaCungCap(String text) {
         ArrayList<PhieuNhap> result = new ArrayList<>();
-        ArrayList<PhieuNhap> armt = PhieuNhapBLL.getInstance().selectAll();
+        ArrayList<PhieuNhap> armt = NPhieuNhapBLL.getInstance().selectAll();
         for (var phieu : armt) {
             if (phieu.getNhaCungCap().toLowerCase().contains(text.toLowerCase())) {
                 result.add(phieu);
@@ -470,11 +470,11 @@ private void initComboBoxData() {
     public void deletePhieuNhap(PhieuNhap pn) {
         int result = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xoá " + pn.getMaPhieu(), "Xác nhận xoá phiếu", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
-            ArrayList<ChiTietPhieuNhap> ctPhieuNhap = ChiTietPhieuNhapBLL.getInstance().selectAll(pn.getMaPhieu());
+            ArrayList<ChiTietPhieuNhap> ctPhieuNhap = NChiTietPhieuNhapBLL.getInstance().selectAll(pn.getMaPhieu());
             for (ChiTietPhieuNhap i : ctPhieuNhap) {
-                ChiTietPhieuNhapBLL.getInstance().delete(i);
+                NChiTietPhieuNhapBLL.getInstance().delete(i);
             }
-            PhieuNhapBLL.getInstance().delete(pn);
+            NPhieuNhapBLL.getInstance().delete(pn);
             JOptionPane.showMessageDialog(this, "Đã xoá thành công phiếu " + pn.getMaPhieu());
             loadDataToTable();
         }
@@ -596,7 +596,7 @@ private void initComboBoxData() {
 
      public PhieuNhap getPhieuNhapSelect() {
         int i_row = tblPhieuNhap.getSelectedRow();
-        PhieuNhap pn = PhieuNhapBLL.getInstance().selectById(tblModel.getValueAt(i_row, 1).toString());
+        PhieuNhap pn = NPhieuNhapBLL.getInstance().selectById(tblModel.getValueAt(i_row, 1).toString());
         return pn;
     }
 
@@ -609,7 +609,7 @@ private void initComboBoxData() {
         ArrayList<PhieuNhap> result = new ArrayList<PhieuNhap>();
         Date from = jDateChooserFrom.getDate();
         Date to = jDateChooserTo.getDate();
-        ArrayList<PhieuNhap> armt = PhieuNhapBLL.getInstance().selectAll();
+        ArrayList<PhieuNhap> armt = NPhieuNhapBLL.getInstance().selectAll();
         for (var phieu : armt) {
             System.out.println("From:" + from + " " + from.getTime());
             System.out.println("To: " + to + " " + to.getTime());
@@ -652,7 +652,7 @@ private void initComboBoxData() {
                     break;
             }
         } else if (content.length() == 0) {
-            result = PhieuNhapBLL.getInstance().selectAll();
+            result = NPhieuNhapBLL.getInstance().selectAll();
         }
         Iterator<PhieuNhap> itr = result.iterator();
         if (jDateChooserFrom.getDate() != null || jDateChooserTo.getDate() != null) {

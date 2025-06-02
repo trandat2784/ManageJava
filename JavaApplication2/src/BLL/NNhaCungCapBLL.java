@@ -15,10 +15,10 @@ import java.util.ArrayList;
  *
  * @author Ngoc
  */
-public class NhaCungCapBLL implements GDBLL<NhaCungCap> {
+public class NNhaCungCapBLL implements GDBLL<NhaCungCap> {
     
-    public static NhaCungCapBLL getInstance() {
-        return new NhaCungCapBLL();
+    public static NNhaCungCapBLL getInstance() {
+        return new NNhaCungCapBLL();
     }
     public ArrayList<NhaCungCap> selectAll() {
         ArrayList<NhaCungCap> ketQua = new ArrayList<NhaCungCap>();

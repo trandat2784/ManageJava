@@ -4,12 +4,13 @@
  */
 package GUI;
 
-import BLL.ChiTietPhieuNhapBLL;
-import BLL.DinhDangPDF;
-import BLL.LoaiSanPhamBLL;
-import BLL.NhaCungCapBLL;
-import BLL.PhieuNhapBLL;
-import BLL.SanPhamBLL;
+import BLL.NChiTietPhieuNhapBLL;
+import BLL.NDinhDangPDF;
+import BLL.NLoaiSanPhamBLL;
+import BLL.loaisanphamBLL;
+import BLL.NNhaCungCapBLL;
+import BLL.NPhieuNhapBLL;
+import BLL.NSanPhamBLL;
 import DAL.ChiTietPhieuNhap;
 import DAL.LoaiSanPham;
 import DAL.NhaCungCap;
@@ -37,18 +38,18 @@ public class NhapHang extends javax.swing.JFrame {
     private ArrayList<SanPham> allProduct;
     private String MaPhieu;
     private ArrayList<ChiTietPhieuNhap> CTPhieu;
-    private static final ArrayList<NhaCungCap> arrNcc = NhaCungCapBLL.getInstance().selectAll();
+    private static final ArrayList<NhaCungCap> arrNcc = NNhaCungCapBLL.getInstance().selectAll();
     
     public NhapHang() throws SQLException {
         initComponents();
-        allProduct = SanPhamBLL.getInstance().selectAllExist();
+        allProduct = NSanPhamBLL.getInstance().selectAllExist();
         initTable();
         loadDataToTableProduct(allProduct);
         loadNccToComboBox();
         loadToComboBox();
         tblSanPham.setDefaultEditor(Object.class, null);
         tblNhapHang.setDefaultEditor(Object.class, null);
-        MaPhieu = createId(PhieuNhapBLL.getInstance().selectAll());
+        MaPhieu = createId(NPhieuNhapBLL.getInstance().selectAll());
         txtMaPhieu.setText(MaPhieu);
         CTPhieu = new ArrayList<ChiTietPhieuNhap>();
     }
@@ -61,8 +62,8 @@ public class NhapHang extends javax.swing.JFrame {
     }
     
     private void loadToComboBox() {
-        LoaiSanPhamBLL dmDao = new LoaiSanPhamBLL();
-        Vector<LoaiSanPham> danhMucList = dmDao.docdanhmuc(); 
+        NLoaiSanPhamBLL dmDao = new NLoaiSanPhamBLL();
+        var danhMucList = dmDao.docdanhmuc(); 
         DefaultComboBoxModel<String> cboModel = new DefaultComboBoxModel<>();
         for (LoaiSanPham dm : danhMucList) 
         {
@@ -134,7 +135,7 @@ public class NhapHang extends javax.swing.JFrame {
 
             for (int i = 0; i < CTPhieu.size(); i++) {
                 tblNhapHangmd.addRow(new Object[]{
-                    i + 1, CTPhieu.get(i).getMaSanPham(), findMayTinh(CTPhieu.get(i).getMaSanPham()).getTenSanPham(), formatter.format(CTPhieu.get(i).getDonGia()), CTPhieu.get(i).getSoLuong() + "đ"
+                    i+1, findMayTinh(CTPhieu.get(i).getMaSanPham()).getTenSanPham(), CTPhieu.get(i).getSoLuong() , formatter.format(CTPhieu.get(i).getDonGia())+ "đ"
                 });
                 sum += CTPhieu.get(i).getDonGia() * CTPhieu.get(i).getSoLuong();
             }
@@ -319,7 +320,7 @@ public class NhapHang extends javax.swing.JFrame {
     }//GEN-LAST:event_cboLoaiSanPhamActionPerformed
          public void filltotable(String tenLoai)
         {
-            SanPhamBLL spdao= new SanPhamBLL();
+            NSanPhamBLL spdao= new NSanPhamBLL();
             dssp = spdao.docdanhsachsanphamtheodm(tenLoai);
             DefaultTableModel dftbl =(DefaultTableModel) tblSanPham.getModel();
             dftbl.setRowCount(0);
@@ -357,7 +358,7 @@ public class NhapHang extends javax.swing.JFrame {
                     if (mtl != null) {
                         mtl.setSoLuong(mtl.getSoLuong() + soluong);
                     } else {
-                        SanPham mt = SanPhamBLL.getInstance().TimKiemId((String) tblSanPham.getValueAt(i_row, 0));
+                        SanPham mt = NSanPhamBLL.getInstance().TimKiemId((String) tblSanPham.getValueAt(i_row, 0));
                         ChiTietPhieuNhap ctp = new ChiTietPhieuNhap(MaPhieu, mt.getMaSanPham(), soluong, mt.getGia());
                         CTPhieu.add(ctp);
                     }
@@ -417,26 +418,26 @@ public class NhapHang extends javax.swing.JFrame {
                 Timestamp sqlTimestamp = new Timestamp(now);
                 PhieuNhap pn = new PhieuNhap(arrNcc.get(cboNhaCungCap.getSelectedIndex()).getMaNcc(), MaPhieu, sqlTimestamp, CTPhieu, tinhTongTien());
                 try {
-                    PhieuNhapBLL.getInstance().insert(pn);
-                    SanPhamBLL mtdao = SanPhamBLL.getInstance();
+                    NPhieuNhapBLL.getInstance().insert(pn);
+                    NSanPhamBLL mtdao = NSanPhamBLL.getInstance();
                     for (var i : CTPhieu) {
-                        ChiTietPhieuNhapBLL.getInstance().insert(i);
+                        NChiTietPhieuNhapBLL.getInstance().insert(i);
                         mtdao.updateSoLuong(i.getMaSanPham(), mtdao.selectById(i.getMaSanPham()).getSoLuongTon() + i.getSoLuong());
                     }
                     JOptionPane.showMessageDialog(this, "Nhập hàng thành công !");
                     int res = JOptionPane.showConfirmDialog(this, "Bạn có muốn xuất file pdf ?","",JOptionPane.YES_NO_OPTION);
                     if (res == JOptionPane.YES_OPTION) {
-                        DinhDangPDF writepdf = new DinhDangPDF();
+                        NDinhDangPDF writepdf = new NDinhDangPDF();
                         writepdf.writePhieuNhap(MaPhieu);
                     }
-                    ArrayList<SanPham> productUp = SanPhamBLL.getInstance().selectAllExist();
+                    ArrayList<SanPham> productUp = NSanPhamBLL.getInstance().selectAllExist();
                     txtSoLuong.setText("1");
                     loadDataToTableProduct(productUp);
                     DefaultTableModel r = (DefaultTableModel) tblNhapHang.getModel();
                     r.setRowCount(0);
                     CTPhieu = new ArrayList<>();
                     textTongTien.setText("0");
-                    this.MaPhieu = createId(PhieuNhapBLL.getInstance().selectAll());
+                    this.MaPhieu = createId(NPhieuNhapBLL.getInstance().selectAll());
                     txtMaPhieu.setText(this.MaPhieu);
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi !");

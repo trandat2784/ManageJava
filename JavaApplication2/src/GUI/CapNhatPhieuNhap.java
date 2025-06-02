@@ -4,10 +4,10 @@
  */
 package GUI;
 
-import BLL.ChiTietPhieuNhapBLL;
-import BLL.NhaCungCapBLL;
-import BLL.PhieuNhapBLL;
-import BLL.SanPhamBLL;
+import BLL.NChiTietPhieuNhapBLL;
+import BLL.NNhaCungCapBLL;
+import BLL.NPhieuNhapBLL;
+import BLL.NSanPhamBLL;
 import DAL.ChiTietPhieuNhap;
 import DAL.NhaCungCap;
 import DAL.PhieuNhap;
@@ -39,7 +39,7 @@ public class CapNhatPhieuNhap extends javax.swing.JFrame {
     private ArrayList<ChiTietPhieuNhap> CTPhieu;
     private ArrayList<ChiTietPhieuNhap> CTPhieuOld;
     private PhieuNhapGUI parent;
-    private static final ArrayList<NhaCungCap> arrNcc = NhaCungCapBLL.getInstance().selectAll();
+    private static final ArrayList<NhaCungCap> arrNcc = NNhaCungCapBLL.getInstance().selectAll();
     
    public CapNhatPhieuNhap(PhieuNhapGUI parent, boolean modal) throws UnsupportedLookAndFeelException {
     UIManager.setLookAndFeel(new FlatLightLaf());
@@ -47,9 +47,9 @@ public class CapNhatPhieuNhap extends javax.swing.JFrame {
     setLocationRelativeTo(null);
     this.parent = parent; // lưu lại biến cha
     this.phieunhap = parent.getPhieuNhapSelect();
-    allProduct = SanPhamBLL.getInstance().selectAllExist();
-    CTPhieu = ChiTietPhieuNhapBLL.getInstance().selectAll(phieunhap.getMaPhieu());
-    CTPhieuOld = ChiTietPhieuNhapBLL.getInstance().selectAll(phieunhap.getMaPhieu());
+    allProduct = NSanPhamBLL.getInstance().selectAllExist();
+    CTPhieu = NChiTietPhieuNhapBLL.getInstance().selectAll(phieunhap.getMaPhieu());
+    CTPhieuOld = NChiTietPhieuNhapBLL.getInstance().selectAll(phieunhap.getMaPhieu());
 
     initTable();
     loadDataToTableProduct(allProduct);
@@ -137,7 +137,7 @@ public class CapNhatPhieuNhap extends javax.swing.JFrame {
 
             for (int i = 0; i < CTPhieu.size(); i++) {
                 tblNhapHangmd.addRow(new Object[]{
-                    i + 1, CTPhieu.get(i).getMaSanPham(), findMayTinh(CTPhieu.get(i).getMaSanPham()).getTenSanPham(), CTPhieu.get(i).getSoLuong(), formatter.format(CTPhieu.get(i).getDonGia()) + "đ"
+                    i + 1, findMayTinh(CTPhieu.get(i).getMaSanPham()).getTenSanPham(), CTPhieu.get(i).getSoLuong(), formatter.format(CTPhieu.get(i).getDonGia()) + "đ"
                 });
             }
         } catch (Exception e) {
@@ -408,11 +408,11 @@ public class CapNhatPhieuNhap extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Bạn chưa chọn sản phẩm để nhập hàng !","Cảnh báo", JOptionPane.WARNING_MESSAGE);
         } else {
             for (var ct : CTPhieuOld) {
-                SanPhamBLL.getInstance().updateSoLuong(ct.getMaSanPham(), SanPhamBLL.getInstance().selectById(ct.getMaSanPham()).getSoLuongTon() - ct.getSoLuong());
+                NSanPhamBLL.getInstance().updateSoLuong(ct.getMaSanPham(), NSanPhamBLL.getInstance().selectById(ct.getMaSanPham()).getSoLuongTon() - ct.getSoLuong());
                 System.out.println(ct.getSoLuong());
             }
             for (var ct : CTPhieu) {
-                SanPhamBLL.getInstance().updateSoLuong(ct.getMaSanPham(), SanPhamBLL.getInstance().selectById(ct.getMaSanPham()).getSoLuongTon() + ct.getSoLuong());
+                NSanPhamBLL.getInstance().updateSoLuong(ct.getMaSanPham(), NSanPhamBLL.getInstance().selectById(ct.getMaSanPham()).getSoLuongTon() + ct.getSoLuong());
                 System.out.println(ct.getSoLuong());
             }
             // Lay thoi gian hien tai
@@ -421,10 +421,10 @@ public class CapNhatPhieuNhap extends javax.swing.JFrame {
             // Tao doi tuong phieu nhap
             PhieuNhap pn = new PhieuNhap(arrNcc.get(cboNhaCungCap.getSelectedIndex()).getMaNcc(), phieunhap.getMaPhieu(), sqlTimestamp, CTPhieu, tinhTongTien());
             try {
-                PhieuNhapBLL.getInstance().update(pn);
-                ChiTietPhieuNhapBLL.getInstance().delete(CTPhieuOld.get(CTPhieuOld.size() - 1));
+                NPhieuNhapBLL.getInstance().update(pn);
+                NChiTietPhieuNhapBLL.getInstance().delete(CTPhieuOld.get(CTPhieuOld.size() - 1));
                 for (var i : CTPhieu) {
-                    ChiTietPhieuNhapBLL.getInstance().insert(i);
+                    NChiTietPhieuNhapBLL.getInstance().insert(i);
                 }
                 JOptionPane.showMessageDialog(this, "Cập nhật thành công !");
                 this.parent.loadDataToTable();
@@ -480,7 +480,7 @@ public class CapNhatPhieuNhap extends javax.swing.JFrame {
             if (mtl != null) {
                 mtl.setSoLuong(mtl.getSoLuong() + soluong);
             } else {
-                SanPham mt = SanPhamBLL.getInstance().TimKiemId((String) tblSanPham.getValueAt(i_row, 0));
+                SanPham mt = NSanPhamBLL.getInstance().TimKiemId((String) tblSanPham.getValueAt(i_row, 0));
                 ChiTietPhieuNhap ctp = new ChiTietPhieuNhap(phieunhap.getMaPhieu(), mt.getMaSanPham(), soluong, mt.getGia());
                 CTPhieu.add(ctp);
             }

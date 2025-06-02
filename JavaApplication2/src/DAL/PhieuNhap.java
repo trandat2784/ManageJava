@@ -18,10 +18,20 @@ public class PhieuNhap {
     
     private String nhaCungCap;
     private String maPhieu;
+    private String maNcc;
     private Timestamp thoiGianTao;
     private ArrayList<ChiTietPhieuNhap> CTPhieu;
     private double tongTien;
 
+    public String getMaNcc() {
+        return maNcc;
+    }
+
+    public void setMaNcc(String maNcc) {
+        this.maNcc = maNcc;
+    }
+
+    
     public PhieuNhap(String nhaCungCap, String maPhieu, Timestamp thoiGianTao, ArrayList<ChiTietPhieuNhap> CTPhieu, double tongTien) {
         this.nhaCungCap = nhaCungCap;
         this.maPhieu = maPhieu;

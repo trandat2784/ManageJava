@@ -11,10 +11,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-public class ChiTietPhieuNhapBLL extends ConnectDB {
+public class NChiTietPhieuNhapBLL extends ConnectDB {
     
-    public static ChiTietPhieuNhapBLL getInstance() {
-        return new ChiTietPhieuNhapBLL();
+    public static NChiTietPhieuNhapBLL getInstance() {
+        return new NChiTietPhieuNhapBLL();
     }
 
     public int insert(ChiTietPhieuNhap t) {

@@ -13,12 +13,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 /**
  *
  * @author Windows
  */
-public class loaisanphamBLL {
+public class loaisanphamBLL extends ConnectDB{
     public List<LoaiSanPham> getAllCategory() throws SQLException {
         ConnectDB connection= new ConnectDB();
         Connection conn = connection.getConnection();
@@ -79,4 +80,11 @@ public class loaisanphamBLL {
         conn.close();
         return rows > 0;
      }
+     
+
+    public String getTenLoai() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    
 }
