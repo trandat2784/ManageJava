@@ -3,12 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package BLL;
-import DAL.SanPham;
+
 import Config.ConnectDB;
+import DAL.LoaiSanPham;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -18,77 +18,62 @@ import java.util.List;
  *
  * @author Windows
  */
-public class ProductBLL {
-     public List<SanPham> getAllProduct() throws SQLException {
+public class loaisanphamBLL {
+    public List<LoaiSanPham> getAllCategory() throws SQLException {
         ConnectDB connection= new ConnectDB();
         Connection conn = connection.getConnection();
         if (conn == null) {
           System.out.println("❌ Kết nối thất bại, conn = null tại HomeDAO");
          return new ArrayList<>(); // tránh lỗi tiếp theo
 }
-        String sql = "SELECT * FROM sanpham";
+        String sql = "SELECT * FROM loaisanpham";
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
-        List<SanPham> products = new ArrayList<>();
+        List<LoaiSanPham> categorys = new ArrayList<>();
 
         while (rs.next()) {
-            SanPham product = new SanPham(
-                rs.getString("masanpham"),
-                rs.getString("tensanpham"), 
+            LoaiSanPham category = new LoaiSanPham(
                 rs.getInt("maloai"),
-                rs.getString("mancc"),
-                rs.getInt("gia"),
-                rs.getInt("soluongton"),
-                rs.getString("duongdananh")
+                rs.getString("tenloai")
+                
             );
-            products.add(product);
+            categorys.add(category);
         }
-        System.out.println("book size"+products.size());
+        System.out.println("categorys size"+categorys.size());
         rs.close();
         stmt.close();
         conn.close();
-        return products;
+        return categorys;
     }
     
-    public boolean insertProduct(SanPham p) throws SQLException {
+    public boolean insertCategory(LoaiSanPham p) throws SQLException {
         ConnectDB connection= new ConnectDB();
         Connection conn = connection.getConnection();
-        String sql = "INSERT INTO sanpham  (masanpham,tensanpham,maloai,mancc,gia,soluongton,duongdananh) VALUES ( ?, ?, ?, ?, ?, ?,?)";
+        String sql = "INSERT INTO loaisanpham  (tenloai) VALUES (  ?)";
         PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setString(1, p.getMaSanPham());
-        ps.setString(2, p.getTenSanPham());
-        ps.setInt(3, p.getMaLoai());
-        ps.setString(4, p.getMaNcc());
-        ps.setFloat(5, p.getGia());
-        ps.setInt(6, p.getSoLuongTon());
-        ps.setString(7, p.getDuongDanAnh());
+        ps.setString(1, p.getTenLoai());
         int rows = ps.executeUpdate();
         ps.close();
         return rows > 0;
         
     }
-    public boolean updateProduct(SanPham p) throws SQLException {
+    public boolean updateCategory(LoaiSanPham p) throws SQLException {
         ConnectDB connection= new ConnectDB();
         Connection conn = connection.getConnection();
-        String sql = "Update sanpham Set tensanpham=?,maloai=?,mancc=?,gia=?,soluongton=?,duongdananh=? where masanpham=?";
+        String sql = "Update loaisanpham Set tenloai=? where maloai=?";
         PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setString(7, p.getMaSanPham());
-        ps.setString(1, p.getTenSanPham());
         ps.setInt(2, p.getMaLoai());
-        ps.setString(3, p.getMaNcc());
-        ps.setFloat(4, p.getGia());
-        ps.setInt(5, p.getSoLuongTon());
-        ps.setString(6, p.getDuongDanAnh());
+        ps.setString(1, p.getTenLoai());
         int rows = ps.executeUpdate();
         ps.close();
         return rows > 0;
     }
-     public boolean deleteProduct(String ProductID) throws SQLException {
+     public boolean deleteCategory(int maloai) throws SQLException {
         ConnectDB connection= new ConnectDB();
         Connection conn = connection.getConnection();
-         String sql = "DELETE FROM sanpham WHERE masanpham=?";
+         String sql = "DELETE FROM loaisanpham WHERE maloai=?";
         PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setString(1, ProductID);
+        ps.setInt(1, maloai);
         int rows = ps.executeUpdate();
         ps.close();
         conn.close();

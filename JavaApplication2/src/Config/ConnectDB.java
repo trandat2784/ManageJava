@@ -7,6 +7,7 @@ package Config;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
@@ -48,6 +49,7 @@ public class ConnectDB {
 //    new ConnectDB(); // Tự động kiểm tra kết nối khi khởi tạo
 //}
     
+<<<<<<< HEAD
     public static Connection getConnection() {
         Connection c = null;
         try {
@@ -68,6 +70,23 @@ public class ConnectDB {
             e.printStackTrace();
         }
         return c;
+=======
+    public ConnectDB() {
+    try {
+        String url = "jdbc:sqlserver://localhost:1433;"
+                  + "databaseName=csdlqlbhnt;"
+                  + "user=sa;"
+                  + "password=12345678;"
+                  + "encrypt=true;trustServerCertificate=true";
+        this.con = DriverManager.getConnection(url);
+        
+        // Kiểm tra và in thông báo kết nối thành công/thất bại
+        System.out.println(this.con != null ? "Kết nối thành công!" : "Kết nối thất bại!");
+        
+    } catch (SQLException e) {
+        e.printStackTrace();
+        System.out.println("Kết nối thất bại do lỗi: " + e.getMessage());
+>>>>>>> 6a820a6ea184da9f95c5a29ae266a0bec046cac2
     }
 
     public static void closeConnection(Connection c) {
@@ -79,6 +98,7 @@ public class ConnectDB {
             e.printStackTrace();
         }
     }
+<<<<<<< HEAD
 
     public static void printInfo(Connection c) {
         try {
@@ -92,4 +112,8 @@ public class ConnectDB {
         }
     }
     
+=======
+   
+   
+>>>>>>> 6a820a6ea184da9f95c5a29ae266a0bec046cac2
 }
