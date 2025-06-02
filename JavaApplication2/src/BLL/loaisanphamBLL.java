@@ -49,10 +49,9 @@ public class loaisanphamBLL {
     public boolean insertCategory(LoaiSanPham p) throws SQLException {
         ConnectDB connection= new ConnectDB();
         Connection conn = connection.getConnection();
-        String sql = "INSERT INTO loaisanpham  (maloai,tenloai) VALUES ( ?, ?)";
+        String sql = "INSERT INTO loaisanpham  (tenloai) VALUES (  ?)";
         PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setInt(1, p.getMaLoai());
-        ps.setString(2, p.getTenLoai());
+        ps.setString(1, p.getTenLoai());
         int rows = ps.executeUpdate();
         ps.close();
         return rows > 0;
