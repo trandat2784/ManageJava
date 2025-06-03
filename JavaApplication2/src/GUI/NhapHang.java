@@ -262,7 +262,7 @@ public class NhapHang extends javax.swing.JFrame {
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 370, -1, -1));
 
         txtMaPhieu.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        getContentPane().add(txtMaPhieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 250, 210, -1));
+        getContentPane().add(txtMaPhieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 250, 340, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setText("Mã phiếu nhập");
@@ -273,7 +273,7 @@ public class NhapHang extends javax.swing.JFrame {
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 310, -1, -1));
 
         cboNhaCungCap.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        getContentPane().add(cboNhaCungCap, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 310, 210, -1));
+        getContentPane().add(cboNhaCungCap, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 310, 340, -1));
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton1.setText("Cập nhật số lượng");
@@ -300,7 +300,7 @@ public class NhapHang extends javax.swing.JFrame {
                 btnNhapHangActionPerformed(evt);
             }
         });
-        getContentPane().add(btnNhapHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 420, -1, -1));
+        getContentPane().add(btnNhapHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 420, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel5.setText("Chọn số lượng hàng");

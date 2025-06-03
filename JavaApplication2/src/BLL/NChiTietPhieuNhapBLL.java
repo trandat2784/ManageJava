@@ -92,8 +92,6 @@ public class NChiTietPhieuNhapBLL extends ConnectDB {
             pst.setString(2, t.getMaSanPham());
             pst.setInt(3, t.getSoLuong());
             pst.setDouble(4, t.getDonGia());
-            pst.setString(5, t.getMaPhieu());
-            pst.setString(6, t.getMaSanPham());
             ketQua = pst.executeUpdate();
             ConnectDB.closeConnection(con);
         } catch (Exception e) {

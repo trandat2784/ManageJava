@@ -25,7 +25,7 @@ public class ConnectDB {
             DriverManager.registerDriver(new com.microsoft.sqlserver.jdbc.SQLServerDriver());
 
             // Các thông số kết nối
-            String url = "jdbc:sqlserver://localhost:1433;databaseName=csdlqlbhnt2;encrypt=false;trustServerCertificate=true";
+            String url = "jdbc:sqlserver://localhost:1433;databaseName=csdlqlbhnt3;encrypt=false;trustServerCertificate=true";
             String userName = "sa";
             String password = "ngocngoc";
 

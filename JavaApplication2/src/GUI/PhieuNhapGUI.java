@@ -5,6 +5,7 @@
 package GUI;
 
 import BLL.NChiTietPhieuNhapBLL;
+import BLL.NDinhDangPDF;
 import BLL.NNhaCungCapBLL;
 import BLL.NPhieuNhapBLL;
 import DAL.ChiTietPhieuNhap;
@@ -365,7 +366,7 @@ public class PhieuNhapGUI extends javax.swing.JFrame   {
         });
 
         jButton6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton6.setText("Xuất Excel");
+        jButton6.setText("Xuất PDF");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -438,7 +439,7 @@ public class PhieuNhapGUI extends javax.swing.JFrame   {
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, Short.MAX_VALUE))
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
@@ -450,7 +451,7 @@ public class PhieuNhapGUI extends javax.swing.JFrame   {
                         .addGap(26, 26, 26)
                         .addComponent(jButton6))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(168, Short.MAX_VALUE))
         );
 
         jPanel2.getAccessibleContext().setAccessibleName("Lọc theo ngày");
@@ -513,39 +514,63 @@ public class PhieuNhapGUI extends javax.swing.JFrame   {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-         try {
-            JFileChooser jFileChooser = new JFileChooser();
-            jFileChooser.showSaveDialog(this);
-            File saveFile = jFileChooser.getSelectedFile();
-            if (saveFile != null) {
-                saveFile = new File(saveFile.toString() + ".xlsx");
-                Workbook wb = new XSSFWorkbook();
-                Sheet sheet = wb.createSheet("Account");
+       
+//    try {
+//        JFileChooser jFileChooser = new JFileChooser();
+//        jFileChooser.setDialogTitle("Chọn nơi lưu file Excel");
+//        int userSelection = jFileChooser.showSaveDialog(this);
+//        
+//        if (userSelection == JFileChooser.APPROVE_OPTION) {
+//            File saveFile = jFileChooser.getSelectedFile();
+//            // Thêm đuôi .xlsx nếu chưa có
+//            if (!saveFile.getName().toLowerCase().endsWith(".xlsx")) {
+//                saveFile = new File(saveFile.getAbsolutePath() + ".xlsx");
+//            }
+//            
+//            // Tạo workbook và sheet
+//            Workbook wb = new XSSFWorkbook();
+//            Sheet sheet = wb.createSheet("PhieuNhap");
+//
+//            // Tạo header row
+//            Row headerRow = sheet.createRow(0);
+//            for (int i = 0; i < tblPhieuNhap.getColumnCount(); i++) {
+//                Cell cell = headerRow.createCell(i);
+//                cell.setCellValue(tblPhieuNhap.getColumnName(i));
+//            }
+//
+//            // Thêm dữ liệu từ table
+//            for (int row = 0; row < tblPhieuNhap.getRowCount(); row++) {
+//                Row sheetRow = sheet.createRow(row + 1);
+//                for (int col = 0; col < tblPhieuNhap.getColumnCount(); col++) {
+//                    Cell cell = sheetRow.createCell(col);
+//                    Object value = tblPhieuNhap.getValueAt(row, col);
+//                    if (value != null) {
+//                        cell.setCellValue(value.toString());
+//                    }
+//                }
+//            }
+//
+//            // Tự động điều chỉnh độ rộng cột
+//            for (int i = 0; i < tblPhieuNhap.getColumnCount(); i++) {
+//                sheet.autoSizeColumn(i);
+//            }
+//
+//            // Lưu file
+//            try (FileOutputStream out = new FileOutputStream(saveFile)) {
+//                wb.write(out);
+//                JOptionPane.showMessageDialog(this, "Xuất file Excel thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+//            }
+//            
+//            wb.close();
+//        }
+//    } catch (Exception e) {
+//        e.printStackTrace();
+//        JOptionPane.showMessageDialog(this, "Lỗi khi xuất file: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+//    }
 
-                Row rowCol = sheet.createRow(0);
-                for (int i = 0; i < tblPhieuNhap.getColumnCount(); i++) {
-                    Cell cell = rowCol.createCell(i);
-                    cell.setCellValue(tblPhieuNhap.getColumnName(i));
-                }
-                for (int j = 0; j < tblPhieuNhap.getRowCount(); j++) {
-                    Row row = sheet.createRow(j + 1);
-                    for (int k = 0; k < tblPhieuNhap.getColumnCount(); k++) {
-                        Cell cell = row.createCell(k);
-                        if (tblPhieuNhap.getValueAt(j, k) != null) {
-                            cell.setCellValue(tblPhieuNhap.getValueAt(j, k).toString());
-                        }
-                    }
-                }
-                FileOutputStream out = new FileOutputStream(new File(saveFile.toString()));
-                wb.write(out);
-                wb.close();
-                out.close();
-                openFile(saveFile.toString());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+         NDinhDangPDF writepdf = new NDinhDangPDF();
+        writepdf.writePhieuNhap(this.getPhieuNhapSelect().getMaPhieu());
+
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void btnDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetailActionPerformed

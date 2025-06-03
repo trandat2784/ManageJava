@@ -117,7 +117,7 @@ public class NDinhDangPDF {
     private void setHeader(String title) throws DocumentException {
         // Thêm logo
         try {
-            java.net.URL logoUrl = getClass().getResource("/icon/logoNguyenKhanh.png");
+            java.net.URL logoUrl = getClass().getResource("icon/logo.png");
             if (logoUrl != null) {
                 Image logoImage = Image.getInstance(logoUrl);
                 logoImage.scaleToFit(100, 100); // Điều chỉnh kích thước logo
@@ -125,7 +125,7 @@ public class NDinhDangPDF {
                 logoImage.setSpacingAfter(10);
                 document.add(logoImage);
             } else {
-                System.err.println("Không tìm thấy logo tại /icon/logoNguyenKhanh.png");
+                System.err.println("Không tìm thấy logo tại /icon/logo.png");
             }
         } catch (IOException e) {
             System.err.println("Lỗi khi tải logo: " + e.getMessage());

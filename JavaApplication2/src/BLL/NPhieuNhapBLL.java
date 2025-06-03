@@ -27,7 +27,7 @@ public class NPhieuNhapBLL implements GDBLL<PhieuNhap> {
         int ketQua = 0;
         try {
             Connection con = ConnectDB.getConnection();
-            String sql = "INSERT INTO PhieuNhap (maPhieu, thoiGianTao,maNcc, tongTien) VALUES (?,?,?,?,?)";
+            String sql = "INSERT INTO PhieuNhap (maPhieu, thoiGianTao,maNcc, tongTien) VALUES (?,?,?,?)";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, t.getMaPhieu());
             pst.setTimestamp(2, t.getThoiGianTao());
@@ -91,9 +91,8 @@ public class NPhieuNhapBLL implements GDBLL<PhieuNhap> {
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, t.getMaPhieu());
             pst.setTimestamp(2, t.getThoiGianTao());
-            pst.setString(4, t.getNhaCungCap());
-            pst.setDouble(5, t.getTongTien());
-            pst.setString(6, t.getMaPhieu());
+            pst.setString(3, t.getNhaCungCap());
+            pst.setDouble(4, t.getTongTien());
             ketQua = pst.executeUpdate();
             ConnectDB.closeConnection(con);
         } catch (Exception e) {
