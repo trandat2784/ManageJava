@@ -406,7 +406,7 @@ private void loadCategorytoComboBox (){
         int maloai = Integer.parseInt(parts[0].trim());
 
         // Đường dẫn đích lưu ảnh
-        String destDir = "D:\\Project-D\\Java\\JavaApplication2\\src\\Assets\\Image\\";
+      String destDir = "Assets" + File.separator + "Image" + File.separator;
         File sourceFile = new File(selectedImagePath);
         File destFile = new File(destDir + savedImageName);
 
@@ -422,7 +422,7 @@ private void loadCategorytoComboBox (){
             "NCC01",
             Float.parseFloat(Price.getText()),
             Integer.parseInt(StockQuantity.getText()),
-            destFile.getAbsolutePath()
+            destDir + savedImageName // 
         );
 
         // Gọi BLL để thêm sản phẩm
@@ -449,7 +449,7 @@ private void loadCategorytoComboBox (){
         int maloai = Integer.parseInt(parts[0].trim());
 
          // Đường dẫn đích lưu ảnh
-        String destDir = "D:\\Project-D\\Java\\JavaApplication2\\src\\Assets\\Image\\";
+        String destDir = "Assets" + File.separator + "Image" + File.separator;
         File sourceFile = new File(selectedImagePath);
         File destFile = new File(destDir + savedImageName);
 
@@ -594,10 +594,9 @@ private void loadCategorytoComboBox (){
         selectedImagePath = selectedFile.getAbsolutePath(); // Lưu đường dẫn ảnh gốc
 
         // Đặt tên mới cho file ảnh
-        savedImageName = "sp_" + System.currentTimeMillis() + ".png";
-        String destDir = "D:\\Project-D\\Java\\JavaApplication2\\src\\Assets\\Image\\";
+         savedImageName = "sp_" + System.currentTimeMillis() + ".png";
+        String destDir = "Assets" + File.separator + "Image" + File.separator;
         String fullDestPath = destDir + savedImageName;
-
         // Gán đường dẫn mới cho text field (nếu bạn cần hiển thị)
         ImagePath.setText(fullDestPath);
 
