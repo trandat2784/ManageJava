@@ -83,6 +83,7 @@ public class ProductBLL {
         ps.close();
         return rows > 0;
     }
+    
      public boolean deleteProduct(String ProductID) throws SQLException {
         ConnectDB connection= new ConnectDB();
         Connection conn = connection.getConnection();
@@ -94,4 +95,49 @@ public class ProductBLL {
         conn.close();
         return rows > 0;
      }
+     public List<SanPham> searchProductByName(String keyword) throws SQLException {
+    ConnectDB connection = new ConnectDB();
+    Connection conn = connection.getConnection();
+    List<SanPham> products = new ArrayList<>();
+
+    if (conn == null) {
+        System.out.println("❌ Kết nối thất bại, conn = null tại searchProductByName");
+        return products;
+    }
+
+    String sql = "SELECT * FROM sanpham WHERE tensanpham LIKE ?";
+    PreparedStatement ps = conn.prepareStatement(sql);
+    ps.setString(1, "%" + keyword + "%"); // tìm chứa từ khóa
+    ResultSet rs = ps.executeQuery();
+
+    while (rs.next()) {
+        SanPham product = new SanPham(
+            rs.getString("masanpham"),
+            rs.getString("tensanpham"), 
+            rs.getInt("maloai"),
+            rs.getString("mancc"),
+            rs.getInt("gia"),
+            rs.getInt("soluongton"),
+            rs.getString("duongdananh")
+        );
+        products.add(product);
+    }
+
+    rs.close();
+    ps.close();
+    conn.close();
+    return products;
+    }
+public String getImagePathById(String productId) throws SQLException {
+    ConnectDB connection= new ConnectDB();
+        Connection conn = connection.getConnection();
+    String sql = "SELECT duongdananh  FROM SanPham WHERE masanpham = ?";
+    PreparedStatement ps = conn.prepareStatement(sql);
+    ps.setString(1, productId);
+    ResultSet rs = ps.executeQuery();
+    if (rs.next()) {
+        return rs.getString("duongdananh");
+    }
+    return null;
+}
 }

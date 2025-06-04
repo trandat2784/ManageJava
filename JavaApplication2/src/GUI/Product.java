@@ -9,11 +9,19 @@ import BLL.loaisanphamBLL;
 import DAL.SanPham;
 import DAL.LoaiSanPham;
 import java.awt.HeadlessException;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -21,7 +29,8 @@ import javax.swing.table.DefaultTableModel;
  * @author Windows
  */
 public class Product extends javax.swing.JFrame {
-
+private String selectedImagePath = null; // Đường dẫn ảnh đã chọn
+private String savedImageName = null; // Tên mới sẽ được copy và lưu
     /**
      * Creates new form Product
      */
@@ -98,6 +107,11 @@ private void loadCategorytoComboBox (){
         deleteProduct = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         TableProduct = new javax.swing.JTable();
+        InputSearch = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        chooseFile = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 0, 0));
@@ -213,6 +227,42 @@ private void loadCategorytoComboBox (){
         });
         jScrollPane2.setViewportView(TableProduct);
 
+        jButton2.setBackground(new java.awt.Color(102, 153, 255));
+        jButton2.setFont(new java.awt.Font("JetBrains Mono ExtraBold", 1, 14)); // NOI18N
+        jButton2.setText("Search");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        chooseFile.setFont(new java.awt.Font("JetBrains Mono", 0, 18)); // NOI18N
+        chooseFile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        chooseFile.setText("Image");
+        chooseFile.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        chooseFile.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                chooseFileMouseClicked(evt);
+            }
+        });
+
+        jButton3.setFont(new java.awt.Font("JetBrains Mono", 0, 12)); // NOI18N
+        jButton3.setText("Choose File Image");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("JetBrains Mono ExtraBold", 1, 14)); // NOI18N
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("Product Image");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -224,46 +274,61 @@ private void loadCategorytoComboBox (){
             .addGroup(layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 744, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(217, 217, 217))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3))
-                                .addGap(65, 65, 65)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(StockQuantity)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel4)
+                                            .addComponent(jLabel1)
+                                            .addComponent(jLabel2)
+                                            .addComponent(jLabel3))
+                                        .addGap(65, 65, 65)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(ImagePath, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(Price, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(ProductName, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(ProductName, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(StockQuantity, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(ProductID, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(InputSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jButton2))
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel5)
+                                                .addComponent(jLabel6)
+                                                .addComponent(jLabel8)))
+                                        .addGap(97, 97, 97)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(CategoryCbx, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(Supplier, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(130, 130, 130)
+                                                .addComponent(updateProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addGap(446, 446, 446)
+                                                .addComponent(jButton3)))
                                         .addGap(0, 0, Short.MAX_VALUE)))
-                                .addGap(216, 216, 216)
-                                .addComponent(ProductID, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(34, 34, 34))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel8))
-                                .addGap(97, 97, 97)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(CategoryCbx, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Supplier, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(130, 130, 130)
-                                .addComponent(updateProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(239, 239, 239))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(deleteProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 744, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                .addGap(587, 587, 587)
+                                .addComponent(deleteProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(chooseFile, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -275,31 +340,41 @@ private void loadCategorytoComboBox (){
                     .addComponent(jLabel1)
                     .addComponent(ProductName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(Supplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Supplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(Price, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(CategoryCbx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(ImagePath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8)
-                    .addComponent(ProductID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(StockQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(deleteProduct, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(updateProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(Price, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6)
+                            .addComponent(CategoryCbx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(ImagePath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8)
+                            .addComponent(ProductID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(StockQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton3))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(deleteProduct, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(updateProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(InputSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(chooseFile, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -319,48 +394,92 @@ private void loadCategorytoComboBox (){
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here: Add product
-        try{        
-            String selectedItem = (String) CategoryCbx.getSelectedItem();
-            String[] parts = selectedItem.split("-", 2); // chỉ tách 1 lần
-            String maloaiStr = parts[0].trim(); // "1"
-            String tenloai = parts[1].trim();   // "Đồ uống"
-            int maloai = Integer.parseInt(maloaiStr); // nếu cần kiểu int
-        
+       try {
+        if (selectedImagePath == null || savedImageName == null) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn ảnh trước khi thêm sản phẩm!");
+            return;
+        }
+
+        // Lấy thông tin loại sản phẩm từ combobox
+        String selectedItem = (String) CategoryCbx.getSelectedItem();
+        String[] parts = selectedItem.split("-", 2);
+        int maloai = Integer.parseInt(parts[0].trim());
+
+        // Đường dẫn đích lưu ảnh
+        String destDir = "D:\\Project-D\\Java\\JavaApplication2\\src\\Assets\\Image\\";
+        File sourceFile = new File(selectedImagePath);
+        File destFile = new File(destDir + savedImageName);
+
+        // Copy ảnh vào thư mục dự án
+        Files.copy(sourceFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+        // Tạo đối tượng sản phẩm
         ProductBLL product = new ProductBLL();
-        SanPham furniture = new SanPham(ProductID.getText(),ProductName.getText(),maloai,"NCC01",Float.parseFloat(Price.getText()),Integer.parseInt(StockQuantity.getText()),ImagePath.getText());
-        boolean isSuccess= product.insertProduct( furniture);
-          if (isSuccess) {
+        SanPham furniture = new SanPham(
+            ProductID.getText(),
+            ProductName.getText(),
+            maloai,
+            "NCC01",
+            Float.parseFloat(Price.getText()),
+            Integer.parseInt(StockQuantity.getText()),
+            destFile.getAbsolutePath()
+        );
+
+        // Gọi BLL để thêm sản phẩm
+        boolean isSuccess = product.insertProduct(furniture);
+        if (isSuccess) {
             JOptionPane.showMessageDialog(this, "Thêm sản phẩm thành công!");
             loadDataToTable();
-          } else {
+        } else {
             JOptionPane.showMessageDialog(this, "Thêm sản phẩm thất bại!");
-          }
         }
-        catch (HeadlessException | NumberFormatException | SQLException e) {
-         JOptionPane.showMessageDialog(this, "Lỗi kết nối CSDL: " + e.getMessage());
-        }
+
+    } catch (HeadlessException | NumberFormatException | SQLException | IOException e) {
+        JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage());
+    }
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void updateProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateProductMouseClicked
         // TODO add your handling code here:
-             ProductBLL product = new ProductBLL();
-        try{
-             SanPham furniture = new SanPham(ProductID.getText(), ProductName.getText(),1,"NCC02",Float.parseFloat(Price.getText()),Integer.parseInt(StockQuantity.getText()),ImagePath.getText());
-            // 0 ở đây là BookID tạm, nếu bạn để auto-increment ở DB thì ko cần truyền
-            boolean isSuccess = product.updateProduct(furniture);
-            if(isSuccess) {
-                JOptionPane.showMessageDialog(this, "Sửa sản phầm thành công!");
-                loadDataToTable(); // reload lại dữ liệu lên bảng
-            } else {
-                JOptionPane.showMessageDialog(this, "Sửa sản phầm  thất bại!");
+    ProductBLL product = new ProductBLL();
+    try {
+        // Lấy dữ liệu loại sản phẩm từ combobox
+        String selectedItem = (String) CategoryCbx.getSelectedItem();
+        String[] parts = selectedItem.split("-", 2);
+        int maloai = Integer.parseInt(parts[0].trim());
+
+         // Đường dẫn đích lưu ảnh
+        String destDir = "D:\\Project-D\\Java\\JavaApplication2\\src\\Assets\\Image\\";
+        File sourceFile = new File(selectedImagePath);
+        File destFile = new File(destDir + savedImageName);
+
+        // Copy ảnh vào thư mục dự án
+        Files.copy(sourceFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+        // Tạo đối tượng sản phẩm với đường dẫn ảnh mới
+        SanPham furniture = new SanPham(
+            ProductID.getText(),
+            ProductName.getText(),
+            maloai,
+            "NCC02",
+            Float.parseFloat(Price.getText()),
+            Integer.parseInt(StockQuantity.getText()),
+             destFile.getAbsolutePath()
+        );
+
+        boolean isSuccess = product.updateProduct(furniture);
+        if (isSuccess) {
+            JOptionPane.showMessageDialog(this, "Sửa sản phẩm thành công!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Sửa sản phẩm thất bại!");
         }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Giá tiền hoặc số lượng không hợp lệ!");
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Lỗi khi sửa sách: " + e.getMessage());
-            e.printStackTrace();
-        }
-        loadDataToTable();
+        loadDataToTable(); // làm mới bảng
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Giá tiền hoặc số lượng không hợp lệ!");
+    } catch (SQLException | IOException e) {
+        JOptionPane.showMessageDialog(this, "Lỗi khi sửa sản phẩm: " + e.getMessage());
+        e.printStackTrace();
+    }
     }//GEN-LAST:event_updateProductMouseClicked
 
     private void updateProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateProductActionPerformed
@@ -369,19 +488,36 @@ private void loadCategorytoComboBox (){
 
     private void deleteProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteProductMouseClicked
         // TODO add your handling code here:
-                 ProductBLL product = new ProductBLL();
-        try{
-            boolean success = product.deleteProduct(ProductID.getText());
-            if(success) {
-                JOptionPane.showMessageDialog(this, "Xóa sản phẩm thành công!");
-                loadDataToTable(); // reload lại dữ liệu lên bảng
+       ProductBLL product = new ProductBLL();
+    try {
+        String imagePath = ImagePath.getText(); // Đường dẫn ảnh
+        
+        // Xóa file ảnh (nếu tồn tại)
+        if (imagePath != null && !imagePath.isEmpty()) {
+            File imageFile = new File(imagePath);
+            if (imageFile.exists()) {
+                if (imageFile.delete()) {
+                    System.out.println("Ảnh đã được xóa: " + imagePath);
+                } else {
+                    System.out.println("Không thể xóa ảnh: " + imagePath);
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "Xóa sản phẩm thất bại!");
+                System.out.println("Ảnh không tồn tại: " + imagePath);
+            }
         }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Lỗi khi xóa sản phẩm: " + e.getMessage());
-            e.printStackTrace();
+
+        // Xóa sản phẩm trong database
+        boolean success = product.deleteProduct(ProductID.getText());
+        if (success) {
+            JOptionPane.showMessageDialog(this, "Xóa sản phẩm thành công!");
+            loadDataToTable(); // reload bảng
+        } else {
+            JOptionPane.showMessageDialog(this, "Xóa sản phẩm thất bại!");
         }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Lỗi khi xóa sản phẩm: " + e.getMessage());
+        e.printStackTrace();
+    }
 
     }//GEN-LAST:event_deleteProductMouseClicked
 
@@ -399,11 +535,17 @@ private void loadCategorytoComboBox (){
                 String price = model.getValueAt(selectedRow, 4).toString();
                 String stock = model.getValueAt(selectedRow, 5).toString();
                 String imagePath = model.getValueAt(selectedRow, 6).toString();
+          
+
                  ProductID.setText(productId);
                  ProductName.setText(productName);
                  Price.setText(price);
                  StockQuantity.setText(stock);
                  ImagePath.setText(imagePath);
+           
+                 ImageIcon imageIcon = new ImageIcon(imagePath);
+                chooseFile.setIcon(imageIcon);  // label là JLabel
+                chooseFile.setText("");         // (không bắt buộc) để xóa text nếu có
                  
 
          }
@@ -413,6 +555,79 @@ private void loadCategorytoComboBox (){
         // TODO add your handling code here:
               
     }//GEN-LAST:event_StockQuantityActionPerformed
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        // TODO add your handling code here:
+        String keyword = InputSearch.getText().trim();
+        ProductBLL productBLL = new ProductBLL();
+        try {
+            List<SanPham> result = productBLL.searchProductByName(keyword);
+            loadTable(result); // Cập nhật bảng với kết quả tìm kiếm
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Lỗi khi tìm kiếm: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+         // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void chooseFileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseFileMouseClicked
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_chooseFileMouseClicked
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        // TODO add your handling code here:
+      JFileChooser fileChooser = new JFileChooser();
+
+    // Chỉ cho phép chọn file ảnh
+    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+        "Image files", "jpg", "jpeg", "png", "gif");
+    fileChooser.setFileFilter(filter);
+
+    int result = fileChooser.showOpenDialog(null);
+    if (result == JFileChooser.APPROVE_OPTION) {
+        File selectedFile = fileChooser.getSelectedFile();
+        selectedImagePath = selectedFile.getAbsolutePath(); // Lưu đường dẫn ảnh gốc
+
+        // Đặt tên mới cho file ảnh
+        savedImageName = "sp_" + System.currentTimeMillis() + ".png";
+        String destDir = "D:\\Project-D\\Java\\JavaApplication2\\src\\Assets\\Image\\";
+        String fullDestPath = destDir + savedImageName;
+
+        // Gán đường dẫn mới cho text field (nếu bạn cần hiển thị)
+        ImagePath.setText(fullDestPath);
+
+        // Resize ảnh cho vừa JLabel
+        ImageIcon imageIcon = new ImageIcon(selectedImagePath);
+        Image image = imageIcon.getImage().getScaledInstance(
+        chooseFile.getWidth(), chooseFile.getHeight(), Image.SCALE_SMOOTH);
+        imageIcon = new ImageIcon(image);
+
+        chooseFile.setText(""); // Xóa chữ cũ
+        chooseFile.setIcon(imageIcon); // Gán ảnh
+    }
+    }//GEN-LAST:event_jButton3MouseClicked
+    public void loadTable(List<SanPham> list) {
+        DefaultTableModel model = (DefaultTableModel) TableProduct.getModel();
+        model.setRowCount(0); // Xóa dữ liệu cũ
+
+        for (SanPham p : list) {
+            Object[] row = new Object[]{
+                p.getMaSanPham(),
+                p.getTenSanPham(),
+                p.getMaLoai(),
+                p.getMaNcc(),
+                p.getGia(),
+                p.getSoLuongTon(),
+                p.getDuongDanAnh()
+            };
+            model.addRow(row);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -452,14 +667,18 @@ private void loadCategorytoComboBox (){
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CategoryCbx;
     private javax.swing.JTextField ImagePath;
+    private javax.swing.JTextField InputSearch;
     private javax.swing.JTextField Price;
     private javax.swing.JTextField ProductID;
     private javax.swing.JTextField ProductName;
     private javax.swing.JTextField StockQuantity;
     private javax.swing.JComboBox<String> Supplier;
     private javax.swing.JTable TableProduct;
+    private javax.swing.JLabel chooseFile;
     private javax.swing.JButton deleteProduct;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -468,6 +687,7 @@ private void loadCategorytoComboBox (){
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton updateProduct;
     // End of variables declaration//GEN-END:variables
