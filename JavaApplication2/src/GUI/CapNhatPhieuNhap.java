@@ -13,6 +13,7 @@ import DAL.NhaCungCap;
 import DAL.PhieuNhap;
 import DAL.SanPham;
 import com.formdev.flatlaf.FlatLightLaf;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -524,7 +525,12 @@ public class CapNhatPhieuNhap extends javax.swing.JFrame {
             public void run() {
                 CapNhatPhieuNhap dialog = null;
                 try {
-                    dialog = new CapNhatPhieuNhap((PhieuNhapGUI) new javax.swing.JFrame(), true);
+                    try {
+                        dialog = new CapNhatPhieuNhap(new PhieuNhapGUI(), true);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(CapNhatPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
                 } catch (UnsupportedLookAndFeelException ex) {
                     Logger.getLogger(CapNhatPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
                 }
