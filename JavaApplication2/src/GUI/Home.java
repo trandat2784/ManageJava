@@ -4,6 +4,9 @@
  */
 package GUI;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -31,11 +34,13 @@ public class Home extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         linkProduct = new javax.swing.JLabel();
         linkCategory = new javax.swing.JLabel();
+        linkCategory1 = new javax.swing.JLabel();
+        linkCategory2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         linkProduct.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        linkProduct.setText("Product");
+        linkProduct.setText("Sản phẩm");
         linkProduct.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 linkProductMouseClicked(evt);
@@ -43,17 +48,33 @@ public class Home extends javax.swing.JFrame {
         });
 
         linkCategory.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        linkCategory.setText("Catergory");
+        linkCategory.setText("Nhập hàng");
+        linkCategory.setToolTipText("");
+        linkCategory.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                linkCategoryMouseClicked(evt);
+            }
+        });
+
+        linkCategory1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        linkCategory1.setText("Danh mục ");
+
+        linkCategory2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        linkCategory2.setText("Phiếu nhập");
+        linkCategory2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                linkCategory2MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(linkProduct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(linkCategory, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(linkProduct, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+            .addComponent(linkCategory, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+            .addComponent(linkCategory1, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+            .addComponent(linkCategory2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -61,8 +82,12 @@ public class Home extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addComponent(linkProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(linkCategory1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(linkCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(215, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(linkCategory2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(109, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -71,7 +96,7 @@ public class Home extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 274, Short.MAX_VALUE))
+                .addGap(0, 483, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -83,23 +108,40 @@ public class Home extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void linkProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_linkProductMouseClicked
-        // TODO add your handling code here:\
-     JFrame currentFrame = this;
+private void openForm(JFrame currentFrame, JFrame newForm) {
     currentFrame.setVisible(false);
-
-    Product p = new Product();
-    p.setVisible(true);
-
-    p.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    p.addWindowListener(new java.awt.event.WindowAdapter() {
+    newForm.setVisible(true);
+    newForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    newForm.addWindowListener(new java.awt.event.WindowAdapter() {
         @Override
         public void windowClosed(java.awt.event.WindowEvent e) {
             currentFrame.setVisible(true);
         }
-    });; 
+    });
+}
+    private void linkProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_linkProductMouseClicked
+        // TODO add your handling code here:\
+         openForm(this, new Product());
     }//GEN-LAST:event_linkProductMouseClicked
+
+    private void linkCategoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_linkCategoryMouseClicked
+        try {
+            // TODO add your handling code here:
+            openForm(this, new NhapHang());
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_linkCategoryMouseClicked
+
+    private void linkCategory2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_linkCategory2MouseClicked
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            openForm(this, new PhieuNhapGUI());
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_linkCategory2MouseClicked
 
     /**
      * @param args the command line arguments
@@ -139,6 +181,8 @@ public class Home extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel linkCategory;
+    private javax.swing.JLabel linkCategory1;
+    private javax.swing.JLabel linkCategory2;
     private javax.swing.JLabel linkProduct;
     // End of variables declaration//GEN-END:variables
 }

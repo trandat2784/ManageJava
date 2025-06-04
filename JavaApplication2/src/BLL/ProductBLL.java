@@ -25,7 +25,7 @@ public class ProductBLL {
         if (conn == null) {
           System.out.println("❌ Kết nối thất bại, conn = null tại HomeDAO");
          return new ArrayList<>(); // tránh lỗi tiếp theo
-}
+        }
         String sql = "SELECT * FROM sanpham";
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
