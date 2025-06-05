@@ -109,39 +109,8 @@ public class HoaDonBLL extends ConnectDB {
             return false;
         }
     }
-    // Kiểm tra mã khách hàng có tồn tại
-public boolean isMaKhExist(String maKH) {
-    String sql = "SELECT 1 FROM khachhang WHERE maKH = ?";
-    try {
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setString(1, maKH);
-        ResultSet rs = ps.executeQuery();
-        boolean exists = rs.next();
-        rs.close();
-        ps.close();
-        return exists;
-    } catch (SQLException e) {
-        e.printStackTrace();
-        return false;
-    }
-}
+    
 
-// Kiểm tra mã nhân viên có tồn tại
-public boolean isMaNvExist(String maNV) {
-    String sql = "SELECT 1 FROM nhanvien WHERE maNV = ?";
-    try {
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setString(1, maNV);
-        ResultSet rs = ps.executeQuery();
-        boolean exists = rs.next();
-        rs.close();
-        ps.close();
-        return exists;
-    } catch (SQLException e) {
-        e.printStackTrace();
-        return false;
-    }
-}
 }
 
 

@@ -65,9 +65,11 @@ public class ConnectDB {
             e.printStackTrace();
         }
        
-    }
+    }}
 // public static void main(String[] args) {
-//        Connection conn = getConnection();
+//        //Connection conn = getConnection();
+//        ConnectDB connection= new ConnectDB();
+//           Connection conn = connection.getConnection();
 //        if (conn != null) {
 //            System.out.println("✅ Kết nối thành công!");
 //            printInfo(conn);
@@ -76,4 +78,4 @@ public class ConnectDB {
 //            System.out.println("❌ Kết nối thất bại.");
 //        }
 //        }
-}
+//}

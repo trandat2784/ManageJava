@@ -32,13 +32,15 @@ public class HoaDonForm extends javax.swing.JFrame {
     private KhachhangBushd khachHangBLL = new KhachhangBushd(); 
     private void loadTable() {
     DefaultTableModel model = new DefaultTableModel();
-    model.setColumnIdentifiers(new String[]{"Mã HĐ", "Mã KH", "Mã NV", "Ngày Lập"});
+    model.setColumnIdentifiers(new String[]{"Mã HĐ", "Mã NV","ten kh", "sdt kh", "Ngày Lập"});
 
     ArrayList<HoaDon> list = hoaDonBLL.getAllHoaDon();
     for (HoaDon hd : list) {
         model.addRow(new Object[]{
             hd.getMaHd(),
-            hd.getMaKh(),
+            hd.getMaNv(),
+            hd.getTenKh(),
+            hd.getSdtKh(),
             hd.getMaNv(),
             hd.getNgayLap()
         });
