@@ -23,6 +23,7 @@ public class loaisanphamBLL extends ConnectDB{
     public List<LoaiSanPham> getAllCategory() throws SQLException {
         ConnectDB connection= new ConnectDB();
         Connection conn = connection.getConnection();
+        
         if (conn == null) {
           System.out.println("❌ Kết nối thất bại, conn = null tại HomeDAO");
          return new ArrayList<>(); // tránh lỗi tiếp theo
@@ -82,9 +83,6 @@ public class loaisanphamBLL extends ConnectDB{
      }
      
 
-    public String getTenLoai() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
+ 
     
 }

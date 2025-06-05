@@ -20,7 +20,8 @@ public class NLoaiSanPhamBLL extends ConnectDB {
     public Vector<LoaiSanPham> docdanhmuc() {
         Vector<LoaiSanPham> vec = new Vector<LoaiSanPham>();
         try {
-            Connection con = ConnectDB.getConnection();
+            ConnectDB connection= new ConnectDB();
+            Connection con = connection.getConnection();
             String sql = "select * from loaisanpham";
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);

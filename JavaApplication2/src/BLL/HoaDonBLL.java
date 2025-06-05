@@ -22,7 +22,8 @@ public class HoaDonBLL extends ConnectDB {
  private Connection con;
 
     public HoaDonBLL() {
-        con = ConnectDB.getConnection(); // Gán kết nối cho biến con
+        ConnectDB connection= new ConnectDB();
+        Connection con = connection.getConnection();
     }
 
     public ArrayList<HoaDon> getAllHoaDon() {

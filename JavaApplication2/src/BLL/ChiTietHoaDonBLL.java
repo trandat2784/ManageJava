@@ -1,7 +1,6 @@
 package BLL;
 
 import Config.ConnectDB;
-import static Config.ConnectDB.getConnection;
 import DAL.ChiTietHoaDon;  // Nếu bạn có DTO lớp ChiTietHoaDon, nếu không thì khai báo kiểu phù hợp
 import java.sql.*;
 import java.util.ArrayList;
@@ -125,7 +124,9 @@ public class ChiTietHoaDonBLL {
     private Connection connection;
     
     public ChiTietHoaDonBLL() {
-        this.connection = getConnection();
+ConnectDB connection= new ConnectDB();
+        Connection con = connection.getConnection();
+       // this.connection = getConnection();
     }
      public ArrayList<ChiTietHoaDon> getChiTietHoaDonByMaHoaDon(String maHD) {
         ArrayList<ChiTietHoaDon> list = new ArrayList<>();

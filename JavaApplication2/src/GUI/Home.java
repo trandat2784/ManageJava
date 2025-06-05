@@ -25,84 +25,84 @@ public class Home extends javax.swing.JFrame {
      * Creates new form Home
      */
     public Home() {
-        initComponents();
-        ImageLabel.setIcon(resizeImage("D:\\DuAnMonJava\\ManageJava\\JavaApplication2\\src\\icon\\fine-home-interior-living-room-picture-wallpaper-2560x1080_14.jpg", 654, 300));
-ImageLabel.setText("");
- linkProduct.addMouseListener(new java.awt.event.MouseAdapter() {
-    @Override
-    public void mouseEntered(java.awt.event.MouseEvent evt) {
-        linkProduct.setOpaque(true);  // phải bật opaque để đổi màu nền
-        linkProduct.setBackground(new Color(100, 149, 237)); // màu xanh nhạt
-        linkProduct.setForeground(Color.WHITE); // đổi màu chữ
-    }
-
-    @Override
-    public void mouseExited(java.awt.event.MouseEvent evt) {
-        linkProduct.setOpaque(false);
-        linkProduct.setBackground(new Color(204, 204, 204)); // màu nền cũ của panel
-        linkProduct.setForeground(Color.BLACK); // màu chữ mặc định
-    }
-});
-   linkCategory1.addMouseListener(new java.awt.event.MouseAdapter() {
-    @Override
-    public void mouseEntered(java.awt.event.MouseEvent evt) {
-        linkCategory1.setOpaque(true);
-        linkCategory1.setBackground(new Color(100, 149, 237));
-        linkCategory1.setForeground(Color.WHITE);
-    }
-
-    @Override
-    public void mouseExited(java.awt.event.MouseEvent evt) {
-        linkCategory1.setOpaque(false);
-        linkCategory1.setBackground(new Color(204, 204, 204));
-        linkCategory1.setForeground(Color.BLACK);
-    }
-});
-   linkCategory.addMouseListener(new java.awt.event.MouseAdapter() {
-    @Override
-    public void mouseEntered(java.awt.event.MouseEvent evt) {
-        linkCategory.setOpaque(true);
-        linkCategory.setBackground(new Color(100, 149, 237));
-        linkCategory.setForeground(Color.WHITE);
-    }
-
-    @Override
-    public void mouseExited(java.awt.event.MouseEvent evt) {
-        linkCategory.setOpaque(false);
-        linkCategory.setBackground(new Color(204, 204, 204));
-        linkCategory.setForeground(Color.BLACK);
-    }
-});
-   linkCategory2.addMouseListener(new java.awt.event.MouseAdapter() {
-    @Override
-    public void mouseEntered(java.awt.event.MouseEvent evt) {
-        linkCategory2.setOpaque(true);
-        linkCategory2.setBackground(new Color(100, 149, 237));
-        linkCategory2.setForeground(Color.WHITE);
-    }
-
-    @Override
-    public void mouseExited(java.awt.event.MouseEvent evt) {
-        linkCategory2.setOpaque(false);
-        linkCategory2.setBackground(new Color(204, 204, 204));
-        linkCategory2.setForeground(Color.BLACK);
-    }
-});
-    }
-private ImageIcon resizeImage(String imagePath, int width, int height) {
-    ImageIcon originalIcon = new ImageIcon(imagePath);
-    Image img = originalIcon.getImage();
-    Image resizedImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-    return new ImageIcon(resizedImg);
-}
-
-   private ImageIcon resizeIcon(String path, int width, int height) {
-        // Lấy ảnh từ resource folder
-        ImageIcon icon = new ImageIcon(getClass().getResource(path));
-        Image img = icon.getImage();
-        Image resizedImage = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        return new ImageIcon(resizedImage);
-    }
+        initComponents();}
+//        ImageLabel.setIcon(resizeImage("D:\\DuAnMonJava\\ManageJava\\JavaApplication2\\src\\icon\\fine-home-interior-living-room-picture-wallpaper-2560x1080_14.jpg", 654, 300));
+//ImageLabel.setText("");
+// linkProduct.addMouseListener(new java.awt.event.MouseAdapter() {
+//    @Override
+//    public void mouseEntered(java.awt.event.MouseEvent evt) {
+//        linkProduct.setOpaque(true);  // phải bật opaque để đổi màu nền
+//        linkProduct.setBackground(new Color(100, 149, 237)); // màu xanh nhạt
+//        linkProduct.setForeground(Color.WHITE); // đổi màu chữ
+//    }
+//
+//    @Override
+//    public void mouseExited(java.awt.event.MouseEvent evt) {
+//        linkProduct.setOpaque(false);
+//        linkProduct.setBackground(new Color(204, 204, 204)); // màu nền cũ của panel
+//        linkProduct.setForeground(Color.BLACK); // màu chữ mặc định
+//    }
+//});
+//   linkCategory1.addMouseListener(new java.awt.event.MouseAdapter() {
+//    @Override
+//    public void mouseEntered(java.awt.event.MouseEvent evt) {
+//        linkCategory1.setOpaque(true);
+//        linkCategory1.setBackground(new Color(100, 149, 237));
+//        linkCategory1.setForeground(Color.WHITE);
+//    }
+//
+//    @Override
+//    public void mouseExited(java.awt.event.MouseEvent evt) {
+//        linkCategory1.setOpaque(false);
+//        linkCategory1.setBackground(new Color(204, 204, 204));
+//        linkCategory1.setForeground(Color.BLACK);
+//    }
+//});
+//   linkCategory.addMouseListener(new java.awt.event.MouseAdapter() {
+//    @Override
+//    public void mouseEntered(java.awt.event.MouseEvent evt) {
+//        linkCategory.setOpaque(true);
+//        linkCategory.setBackground(new Color(100, 149, 237));
+//        linkCategory.setForeground(Color.WHITE);
+//    }
+//
+//    @Override
+//    public void mouseExited(java.awt.event.MouseEvent evt) {
+//        linkCategory.setOpaque(false);
+//        linkCategory.setBackground(new Color(204, 204, 204));
+//        linkCategory.setForeground(Color.BLACK);
+//    }
+//});
+//   linkCategory2.addMouseListener(new java.awt.event.MouseAdapter() {
+//    @Override
+//    public void mouseEntered(java.awt.event.MouseEvent evt) {
+//        linkCategory2.setOpaque(true);
+//        linkCategory2.setBackground(new Color(100, 149, 237));
+//        linkCategory2.setForeground(Color.WHITE);
+//    }
+//
+//    @Override
+//    public void mouseExited(java.awt.event.MouseEvent evt) {
+//        linkCategory2.setOpaque(false);
+//        linkCategory2.setBackground(new Color(204, 204, 204));
+//        linkCategory2.setForeground(Color.BLACK);
+//    }
+//});
+//    }
+//private ImageIcon resizeImage(String imagePath, int width, int height) {
+//    ImageIcon originalIcon = new ImageIcon(imagePath);
+//    Image img = originalIcon.getImage();
+//    Image resizedImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+//    return new ImageIcon(resizedImg);
+//}
+//
+//   private ImageIcon resizeIcon(String path, int width, int height) {
+//        // Lấy ảnh từ resource folder
+//        ImageIcon icon = new ImageIcon(getClass().getResource(path));
+//        Image img = icon.getImage();
+//        Image resizedImage = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+//        return new ImageIcon(resizedImage);
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -119,7 +119,6 @@ private ImageIcon resizeImage(String imagePath, int width, int height) {
         linkCategory = new javax.swing.JLabel();
         linkCategory1 = new javax.swing.JLabel();
         linkCategory2 = new javax.swing.JLabel();
-        ImageLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -209,10 +208,6 @@ private ImageIcon resizeImage(String imagePath, int width, int height) {
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
-        ImageLabel.setIcon(resizeIcon("/image/icon_hello.png", 32, 32));
-        ImageLabel.setIcon(new javax.swing.ImageIcon("D:\\fine-home-interior-living-room-picture-wallpaper-2560x1080_14.jpg")); // NOI18N
-        ImageLabel.setText("jLabel2");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -222,8 +217,6 @@ private ImageIcon resizeImage(String imagePath, int width, int height) {
                 .addGap(0, 2154, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(116, 116, 116)
-                .addComponent(ImageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 654, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -234,14 +227,13 @@ private ImageIcon resizeImage(String imagePath, int width, int height) {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(ImageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void openForm(JFrame currentFrame, JFrame newForm) {
+  
+  private void openForm(JFrame currentFrame, JFrame newForm) {
     currentFrame.setVisible(false);
     newForm.setVisible(true);
     newForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -251,7 +243,7 @@ private ImageIcon resizeImage(String imagePath, int width, int height) {
             currentFrame.setVisible(true);
         }
     });
-}
+            }
     private void linkProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_linkProductMouseClicked
         // TODO add your handling code here:\
          openForm(this, new Product());
@@ -317,7 +309,6 @@ private ImageIcon resizeImage(String imagePath, int width, int height) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel ImageLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

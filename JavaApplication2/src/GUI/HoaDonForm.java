@@ -26,8 +26,7 @@ import javax.swing.JOptionPane;
 
 public class HoaDonForm extends javax.swing.JFrame {
     
-    private Map<String, String> khachHangMap = new HashMap<>();
-    private Map<String, NhanVien> nhanVienMap = new HashMap<>();
+    
 
     private HoaDonBLL hoaDonBLL = new HoaDonBLL();
     private KhachhangBushd khachHangBLL = new KhachhangBushd(); 

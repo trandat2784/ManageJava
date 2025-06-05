@@ -26,7 +26,8 @@ public class NPhieuNhapBLL implements GDBLL<PhieuNhap> {
     public int insert(PhieuNhap t) {
         int ketQua = 0;
         try {
-            Connection con = ConnectDB.getConnection();
+           ConnectDB connection= new ConnectDB();
+           Connection con = connection.getConnection();
             String sql = "INSERT INTO PhieuNhap (maPhieu, thoiGianTao,maNcc, tongTien) VALUES (?,?,?,?)";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, t.getMaPhieu());
@@ -44,7 +45,8 @@ public class NPhieuNhapBLL implements GDBLL<PhieuNhap> {
     public PhieuNhap selectById(String t) {
         PhieuNhap ketQua = null;
         try {
-            Connection con = ConnectDB.getConnection();
+           ConnectDB connection= new ConnectDB();
+           Connection con = connection.getConnection();
             String sql = "SELECT * FROM PhieuNhap WHERE maPhieu=?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, t);
@@ -65,7 +67,8 @@ public class NPhieuNhapBLL implements GDBLL<PhieuNhap> {
     public ArrayList<PhieuNhap> selectAll() {
         ArrayList<PhieuNhap> ketQua = new ArrayList<PhieuNhap>();
         try {
-            Connection con = ConnectDB.getConnection();
+            ConnectDB connection= new ConnectDB();
+            Connection con = connection.getConnection();
             String sql = "SELECT * FROM PhieuNhap ORDER BY thoiGianTao DESC";
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
@@ -86,7 +89,8 @@ public class NPhieuNhapBLL implements GDBLL<PhieuNhap> {
     public int update(PhieuNhap t) {
         int ketQua = 0;
         try {
-            Connection con = ConnectDB.getConnection();
+            ConnectDB connection= new ConnectDB();
+            Connection con = connection.getConnection();
             String sql = "UPDATE PhieuNhap SET maPhieu=?, thoiGianTao=?, maNcc=?, tongTien = ? WHERE maPhieu=?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, t.getMaPhieu());
@@ -104,7 +108,8 @@ public class NPhieuNhapBLL implements GDBLL<PhieuNhap> {
     public int delete(PhieuNhap t) {
         int ketQua = 0;
         try {
-            Connection con = ConnectDB.getConnection();
+           ConnectDB connection= new ConnectDB();
+           Connection con = connection.getConnection();
             String sql = "DELETE FROM PhieuNhap WHERE maPhieu=?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, t.getMaPhieu());
@@ -119,7 +124,8 @@ public class NPhieuNhapBLL implements GDBLL<PhieuNhap> {
      public ArrayList<PhieuTao> selectAllAccount(String acc) {
         ArrayList<PhieuTao> ketQua = new ArrayList<PhieuTao>();
         try {
-            Connection con = ConnectDB.getConnection();
+           ConnectDB connection= new ConnectDB();
+           Connection con = connection.getConnection();
             String sql = "SELECT maPhieu,thoiGianTao,tongTien FROM PhieuNhap  WHERE nguoiTao = ? ORDER BY thoiGianTao DESC";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, acc);
@@ -140,7 +146,8 @@ public class NPhieuNhapBLL implements GDBLL<PhieuNhap> {
     public ArrayList<PhieuTao> selectAllP() {
         ArrayList<PhieuTao> ketQua = new ArrayList<PhieuTao>();
         try {
-            Connection con = ConnectDB.getConnection();
+            ConnectDB connection= new ConnectDB();
+            Connection con = connection.getConnection();
             String sql = "SELECT maPhieu,thoiGianTao,tongTien FROM PhieuNhap  ORDER BY thoiGianTao DESC";
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();

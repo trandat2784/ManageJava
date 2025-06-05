@@ -48,8 +48,10 @@ public class SignIn extends javax.swing.JFrame {
             }
         });
 
+        TaiKhoan.setText("Ngoc123");
         TaiKhoan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        MatKhau.setText("123456");
         MatKhau.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel1.setText("Tài Khoản");
@@ -68,7 +70,6 @@ public class SignIn extends javax.swing.JFrame {
         });
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon("D:\\picturejava\\profile (4).gif")); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel4.setText("ADMIN");
