@@ -131,10 +131,6 @@ private void loadKhachHangToComboBox() {
         tblHoaDon = new javax.swing.JTable();
         jDateChooserHoadon = new com.toedter.calendar.JDateChooser();
         jPanel2 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
@@ -145,10 +141,9 @@ private void loadKhachHangToComboBox() {
         btnSuahd = new javax.swing.JButton();
         btnXoaHD = new javax.swing.JButton();
         btnResetHD = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
         cbNhanvienhd = new javax.swing.JComboBox<>();
-        cbKhachhanghd = new javax.swing.JComboBox<>();
+        txtTenKh = new javax.swing.JTextField();
+        txtSdtKh = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -198,14 +193,6 @@ private void loadKhachHangToComboBox() {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(" Tra cứu hóa đơn"));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel5.setText("Tìm hóa đơn theo tên khách hàng :");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 200, -1));
-
-        jLabel6.setText("Tìm hóa đơn theo tên nhân viên : ");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, -1));
-        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 220, -1));
-        jPanel2.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 220, -1));
 
         jLabel7.setText("Từ ngày : ");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 60, -1));
@@ -272,17 +259,13 @@ private void loadKhachHangToComboBox() {
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 50, 210, 190));
 
-        jButton1.setText("themkh");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, -1, 20));
-
-        jButton6.setText("themnv");
-        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 140, -1, -1));
-
-        cbNhanvienhd.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(cbNhanvienhd, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, 170, -1));
 
-        cbKhachhanghd.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(cbKhachhanghd, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 170, -1));
+        txtTenKh.setText("jTextField1");
+        jPanel1.add(txtTenKh, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 80, -1, -1));
+
+        txtSdtKh.setText("jTextField2");
+        jPanel1.add(txtSdtKh, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 940, 480));
 
@@ -566,11 +549,8 @@ private void setSelectedKhachHangInComboBox(JComboBox<String> comboBox, String m
     private javax.swing.JButton btnResetHD;
     private javax.swing.JButton btnSuahd;
     private javax.swing.JButton btnXoaHD;
-    private javax.swing.JComboBox<String> cbKhachhanghd;
     private javax.swing.JComboBox<String> cbNhanvienhd;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private com.toedter.calendar.JDateChooser jDateChooserHoadon;
@@ -578,18 +558,16 @@ private void setSelectedKhachHangInComboBox(JComboBox<String> comboBox, String m
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTable tblHoaDon;
     private javax.swing.JTextField txtMaHd;
+    private javax.swing.JTextField txtSdtKh;
+    private javax.swing.JTextField txtTenKh;
     // End of variables declaration//GEN-END:variables
 
     

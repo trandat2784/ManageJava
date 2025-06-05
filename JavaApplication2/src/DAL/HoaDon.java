@@ -12,17 +12,19 @@ import java.time.LocalDateTime;
  */
 public class HoaDon {
         private String maHd;
-        private String maKh;
         private String maNv;
+        private String tenKh;
+        private String sdtKh;
         private LocalDateTime ngayLap;
 
     public HoaDon() {
     }
 
-    public HoaDon(String maHd, String maKh, String maNv, LocalDateTime ngayLap) {
+    public HoaDon(String maHd, String maNv, String tenKh, String sdtKh, LocalDateTime ngayLap) {
         this.maHd = maHd;
-        this.maKh = maKh;
         this.maNv = maNv;
+        this.tenKh = tenKh;
+        this.sdtKh = sdtKh;
         this.ngayLap = ngayLap;
     }
 
@@ -34,20 +36,28 @@ public class HoaDon {
         this.maHd = maHd;
     }
 
-    public String getMaKh() {
-        return maKh;
-    }
-
-    public void setMaKh(String maKh) {
-        this.maKh = maKh;
-    }
-
     public String getMaNv() {
         return maNv;
     }
 
     public void setMaNv(String maNv) {
         this.maNv = maNv;
+    }
+
+    public String getTenKh() {
+        return tenKh;
+    }
+
+    public void setTenKh(String tenKh) {
+        this.tenKh = tenKh;
+    }
+
+    public String getSdtKh() {
+        return sdtKh;
+    }
+
+    public void setSdtKh(String sdtKh) {
+        this.sdtKh = sdtKh;
     }
 
     public LocalDateTime getNgayLap() {
@@ -60,8 +70,12 @@ public class HoaDon {
 
     @Override
     public String toString() {
-        return "HoaDon{" + "maHd=" + maHd + ", maKh=" + maKh + ", maNv=" + maNv + ", ngayLap=" + ngayLap + '}';
+        return "HoaDon{" + "maHd=" + maHd + ", maNv=" + maNv + ", tenKh=" + tenKh + ", sdtKh=" + sdtKh + ", ngayLap=" + ngayLap + '}';
     }
+        
+        
+
+    
 
         
 }

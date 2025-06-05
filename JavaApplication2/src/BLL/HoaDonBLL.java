@@ -27,25 +27,25 @@ public class HoaDonBLL extends ConnectDB {
     }
 
     public ArrayList<HoaDon> getAllHoaDon() {
+         ConnectDB connection= new ConnectDB();
+        Connection con = connection.getConnection();
         ArrayList<HoaDon> list = new ArrayList<>();
         String sql = "SELECT * FROM hoadon";
 
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                HoaDon hd = new HoaDon(
-                    rs.getString("maHD"),
-                    rs.getString("maKH"),
-                    rs.getString("maNV"),
-                    rs.getTimestamp("ngayLap").toLocalDateTime()
-                );
-                list.add(hd);
+            try (PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+                
+                while (rs.next()) {
+                    HoaDon hd = new HoaDon(
+                            rs.getString("maHD"),
+                            rs.getString("maKH"),
+                            rs.getString("maNV"),
+                            rs.getTimestamp("ngayLap").toLocalDateTime()
+                    );
+                    list.add(hd);
+                }
+                
             }
-
-            rs.close();
-            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
