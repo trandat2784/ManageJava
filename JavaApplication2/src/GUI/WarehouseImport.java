@@ -33,8 +33,6 @@ public class WarehouseImport extends javax.swing.JFrame {
     private void initComponents() {
 
         MainContent = new javax.swing.JPanel();
-        NhapHang = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,70 +47,22 @@ public class WarehouseImport extends javax.swing.JFrame {
             .addGap(0, 570, Short.MAX_VALUE)
         );
 
-        NhapHang.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                NhapHangMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                NhapHangMousePressed(evt);
-            }
-        });
-
-        jLabel1.setText("jLabel1");
-
-        javax.swing.GroupLayout NhapHangLayout = new javax.swing.GroupLayout(NhapHang);
-        NhapHang.setLayout(NhapHangLayout);
-        NhapHangLayout.setHorizontalGroup(
-            NhapHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(NhapHangLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jLabel1)
-                .addContainerGap(37, Short.MAX_VALUE))
-        );
-        NhapHangLayout.setVerticalGroup(
-            NhapHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, NhapHangLayout.createSequentialGroup()
-                .addContainerGap(44, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(40, 40, 40))
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(NhapHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(76, 76, 76)
+                .addGap(197, 197, 197)
                 .addComponent(MainContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(MainContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(NhapHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void NhapHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NhapHangMouseClicked
-        // TODO add your handling code here:
-         NhapHang nhaphang = new NhapHang();
-       // nhaphang.setNguoiNhapHang(this.currentAcc.getUser());
-        MainContent.removeAll();
-        MainContent.add(nhaphang).setVisible(true);
-    }//GEN-LAST:event_NhapHangMouseClicked
-
-    private void NhapHangMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NhapHangMousePressed
-        // TODO add your handling code here:
-                NhapHang.setBackground(ClickedColor);
-
-    }//GEN-LAST:event_NhapHangMousePressed
 
     /**
      * @param args the command line arguments
@@ -151,7 +101,5 @@ public class WarehouseImport extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel MainContent;
-    private javax.swing.JPanel NhapHang;
-    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

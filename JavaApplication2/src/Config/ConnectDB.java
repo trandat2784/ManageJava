@@ -5,14 +5,19 @@
 package Config;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Ngoc
  */
 public class ConnectDB {
+<<<<<<< HEAD
     public static Connection con = null;
 
     // Lấy connection duy nhất (Singleton pattern đơn giản)
@@ -49,4 +54,51 @@ public class ConnectDB {
     public static void main(String[] args) {
         Connection c = ConnectDB.getConnection(); // Gọi đúng
     }
+=======
+    
+    public static Connection getConnection() {
+        Connection c = null;
+        try {
+            // Đăng ký SQL Server Driver với DriverManager
+            DriverManager.registerDriver(new com.microsoft.sqlserver.jdbc.SQLServerDriver());
+
+            // Các thông số kết nối
+            String url = "jdbc:sqlserver://localhost:1433;databaseName=csdlqlbhnt3;encrypt=false;trustServerCertificate=true";
+            String userName = "sa";
+            String password = "ngocngoc";
+
+
+            // Tạo kết nối
+            c = DriverManager.getConnection(url, userName, password);
+        } catch (Exception e) {
+            // Xử lý ngoại lệ
+            JOptionPane.showMessageDialog(null, "Không thể kết nối đến cơ sở dữ liệu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+        return c;
+    }
+
+    public static void closeConnection(Connection c) {
+        try {
+            if (c != null) {
+                c.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void printInfo(Connection c) {
+        try {
+            if (c != null) {
+                DatabaseMetaData mtdt = c.getMetaData();
+                System.out.println(mtdt.getDatabaseProductName());
+                System.out.println(mtdt.getDatabaseProductVersion());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+>>>>>>> 790d662ec0dd5215e6006ee15ec37378f9619939
 }
