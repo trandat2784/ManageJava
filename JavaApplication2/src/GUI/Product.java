@@ -6,7 +6,7 @@ package GUI;
 
 import BLL.NNhaCungCapBLL;
 import BLL.ProductBLL;
-import BLL.loaisanphamBLL;
+import BLL.NLoaiSanPhamBLL;
 import DAL.SanPham;
 import DAL.LoaiSanPham;
 import DAL.NhaCungCap;
@@ -69,7 +69,7 @@ private void loadDataToTable() {
 }
 private void loadCategorytoComboBox (){
 
-    loaisanphamBLL loaisanpham = new loaisanphamBLL();
+    NLoaiSanPhamBLL loaisanpham = new NLoaiSanPhamBLL();
     try {
         List<LoaiSanPham> categories = loaisanpham.getAllCategory();
         CategoryCbx.removeAllItems();
