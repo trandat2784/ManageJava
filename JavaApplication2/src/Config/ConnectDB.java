@@ -63,9 +63,9 @@ public class ConnectDB {
             DriverManager.registerDriver(new com.microsoft.sqlserver.jdbc.SQLServerDriver());
 
             // Các thông số kết nối
-            String url = "jdbc:sqlserver://localhost:1433;databaseName=csdlqlbhnt3;encrypt=false;trustServerCertificate=true";
+            String url = "jdbc:sqlserver://127.0.0.1:1433;databaseName=csdlqlbhnt;encrypt=true;trustServerCertificate=true";
             String userName = "sa";
-            String password = "ngocngoc";
+            String password = "123456";
 
 
             // Tạo kết nối
@@ -99,6 +99,19 @@ public class ConnectDB {
             e.printStackTrace();
         }
     }
+<<<<<<< HEAD
 
 >>>>>>> 790d662ec0dd5215e6006ee15ec37378f9619939
+=======
+public static void main(String[] args) {
+        Connection conn = getConnection();
+        if (conn != null) {
+            System.out.println("✅ Kết nối thành công!");
+            printInfo(conn);
+            closeConnection(conn);
+        } else {
+            System.out.println("❌ Kết nối thất bại.");
+        }
+    }
+>>>>>>> 188cfc9f7430034d47d1e6eb8f6dea2a12006f9e
 }
