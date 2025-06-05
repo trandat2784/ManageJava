@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  */
 public class ConnectDB {
     
-    public static Connection getConnection() {
+    public  Connection getConnection() {
         Connection c = null;
         try {
             // Đăng ký SQL Server Driver với DriverManager
