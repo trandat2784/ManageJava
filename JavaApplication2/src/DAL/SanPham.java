@@ -94,9 +94,7 @@ public class SanPham {
         return "SanPham{" + "maSanPham=" + maSanPham + ", tenSanPham=" + tenSanPham + ", maLoai=" + maLoai + ", maNcc=" + maNcc + ", gia=" + gia + ", soLuongTon=" + soLuongTon + ", duongDanAnh=" + duongDanAnh + '}';
     }
 
-    public ArrayList<NSanPhamBLL> docdanhsachsanphamtheodm(String tenLoai) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     
-}
+

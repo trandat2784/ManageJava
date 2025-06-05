@@ -17,7 +17,18 @@ import javax.swing.JOptionPane;
  * @author Ngoc
  */
 public class ConnectDB {
+
+
     
+<<<<<<< HEAD
+=======
+
+  
+
+
+
+    
+>>>>>>> 41ec904d145125bd4c7e236b83f64ff360586203
     public  Connection getConnection() {
         Connection c = null;
         try {
@@ -25,9 +36,10 @@ public class ConnectDB {
             DriverManager.registerDriver(new com.microsoft.sqlserver.jdbc.SQLServerDriver());
 
             // Các thông số kết nối
-            String url = "jdbc:sqlserver://localhost:1433;databaseName=csdlqlbhnt3;encrypt=false;trustServerCertificate=true";
+            String url = "jdbc:sqlserver://localhost:1433;databaseName=csdlqlbhnt;encrypt=true;trustServerCertificate=true";
+
             String userName = "sa";
-            String password = "ngocngoc";
+            String password = "12345678";
 
 
             // Tạo kết nối
@@ -60,6 +72,16 @@ public class ConnectDB {
         } catch (Exception e) {
             e.printStackTrace();
         }
+       
     }
-
+// public static void main(String[] args) {
+//        Connection conn = getConnection();
+//        if (conn != null) {
+//            System.out.println("✅ Kết nối thành công!");
+//            printInfo(conn);
+//            closeConnection(conn);
+//        } else {
+//            System.out.println("❌ Kết nối thất bại.");
+//        }
+//        }
 }

@@ -3,11 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DAL;
+import java.util.ArrayList;
+import java.util.List;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-/**
- *
- * @author Ngoc
- */
 public class NhanVien {
     private String maNv;
     private String tenNv;
@@ -69,6 +70,10 @@ public class NhanVien {
     @Override
     public String toString() {
         return "NhanVien{" + "maNv=" + maNv + ", tenNv=" + tenNv + ", email=" + email + ", sdt=" + sdt + ", diaChi=" + diaChi + '}';
+    }
+
+    public String gettennv() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     

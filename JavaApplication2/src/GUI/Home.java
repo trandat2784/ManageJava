@@ -241,7 +241,7 @@ private ImageIcon resizeImage(String imagePath, int width, int height) {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-private void openForm(JFrame currentFrame, JFrame newForm) {
+    private void openForm(JFrame currentFrame, JFrame newForm) {
     currentFrame.setVisible(false);
     newForm.setVisible(true);
     newForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
