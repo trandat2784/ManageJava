@@ -4,10 +4,12 @@
  */
 package GUI;
 
+import BLL.NNhaCungCapBLL;
 import BLL.ProductBLL;
 import BLL.loaisanphamBLL;
 import DAL.SanPham;
 import DAL.LoaiSanPham;
+import DAL.NhaCungCap;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.io.File;
@@ -38,6 +40,7 @@ private String savedImageName = null; // Tên mới sẽ được copy và lưu
         initComponents();
         loadCategorytoComboBox();
         loadDataToTable();
+        loadSuppliertoComboBox();
     }
   
 private void loadDataToTable() {
@@ -78,6 +81,18 @@ private void loadCategorytoComboBox (){
         ex.printStackTrace();
     }
 }
+private void loadSuppliertoComboBox (){
+
+    NNhaCungCapBLL loaisanpham = new NNhaCungCapBLL();
+    
+        List<NhaCungCap> categories = loaisanpham.selectAll();
+        SupplierCbx.removeAllItems();
+        for (NhaCungCap category : categories) {
+            String display = category.getMaNcc()+ " - " + category.getTenNcc();
+            SupplierCbx.addItem(display);  // Thêm đối tượng trực tiếp
+        }
+    
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -96,7 +111,7 @@ private void loadCategorytoComboBox (){
         ImagePath = new javax.swing.JTextField();
         StockQuantity = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        Supplier = new javax.swing.JComboBox<>();
+        SupplierCbx = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         CategoryCbx = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
@@ -154,7 +169,7 @@ private void loadCategorytoComboBox (){
         jLabel5.setFont(new java.awt.Font("JetBrains Mono", 0, 12)); // NOI18N
         jLabel5.setText("Supplier");
 
-        Supplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        SupplierCbx.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel6.setFont(new java.awt.Font("JetBrains Mono", 0, 12)); // NOI18N
         jLabel6.setText("Category");
@@ -309,7 +324,7 @@ private void loadCategorytoComboBox (){
                                         .addGap(97, 97, 97)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(CategoryCbx, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(Supplier, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(SupplierCbx, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -340,7 +355,7 @@ private void loadCategorytoComboBox (){
                     .addComponent(jLabel1)
                     .addComponent(ProductName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(Supplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SupplierCbx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -404,9 +419,13 @@ private void loadCategorytoComboBox (){
         String selectedItem = (String) CategoryCbx.getSelectedItem();
         String[] parts = selectedItem.split("-", 2);
         int maloai = Integer.parseInt(parts[0].trim());
-
+        // Lấy thông tin nha cung cap  từ combobox
+         String selectedItemSupplier = (String) SupplierCbx.getSelectedItem();
+        String[] partSupplier = selectedItemSupplier.split("-", 2);
+        String maNcc = partSupplier[0].trim();
+        
         // Đường dẫn đích lưu ảnh
-      String destDir = "Assets" + File.separator + "Image" + File.separator;
+        String destDir = "Assets" + File.separator + "Image" + File.separator;
         File sourceFile = new File(selectedImagePath);
         File destFile = new File(destDir + savedImageName);
 
@@ -419,7 +438,7 @@ private void loadCategorytoComboBox (){
             ProductID.getText(),
             ProductName.getText(),
             maloai,
-            "NCC01",
+            maNcc,
             Float.parseFloat(Price.getText()),
             Integer.parseInt(StockQuantity.getText()),
             destDir + savedImageName // 
@@ -447,26 +466,26 @@ private void loadCategorytoComboBox (){
         String selectedItem = (String) CategoryCbx.getSelectedItem();
         String[] parts = selectedItem.split("-", 2);
         int maloai = Integer.parseInt(parts[0].trim());
-
+        // Lấy thông tin nha cung cap  từ combobox
+         String selectedItemSupplier = (String) SupplierCbx.getSelectedItem();
+        String[] partSupplier = selectedItemSupplier.split("-", 2);
+        String maNcc = partSupplier[0].trim();
          // Đường dẫn đích lưu ảnh
         String destDir = "Assets" + File.separator + "Image" + File.separator;
         File sourceFile = new File(selectedImagePath);
         File destFile = new File(destDir + savedImageName);
-
         // Copy ảnh vào thư mục dự án
         Files.copy(sourceFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-
         // Tạo đối tượng sản phẩm với đường dẫn ảnh mới
         SanPham furniture = new SanPham(
             ProductID.getText(),
             ProductName.getText(),
             maloai,
-            "NCC02",
+            maNcc,
             Float.parseFloat(Price.getText()),
             Integer.parseInt(StockQuantity.getText()),
              destFile.getAbsolutePath()
         );
-
         boolean isSuccess = product.updateProduct(furniture);
         if (isSuccess) {
             JOptionPane.showMessageDialog(this, "Sửa sản phẩm thành công!");
@@ -491,7 +510,6 @@ private void loadCategorytoComboBox (){
        ProductBLL product = new ProductBLL();
     try {
         String imagePath = ImagePath.getText(); // Đường dẫn ảnh
-        
         // Xóa file ảnh (nếu tồn tại)
         if (imagePath != null && !imagePath.isEmpty()) {
             File imageFile = new File(imagePath);
@@ -671,7 +689,7 @@ private void loadCategorytoComboBox (){
     private javax.swing.JTextField ProductID;
     private javax.swing.JTextField ProductName;
     private javax.swing.JTextField StockQuantity;
-    private javax.swing.JComboBox<String> Supplier;
+    private javax.swing.JComboBox<String> SupplierCbx;
     private javax.swing.JTable TableProduct;
     private javax.swing.JLabel chooseFile;
     private javax.swing.JButton deleteProduct;
