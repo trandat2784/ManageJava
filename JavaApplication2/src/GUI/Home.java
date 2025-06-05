@@ -108,7 +108,17 @@ public class Home extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    b
+    private void openForm(JFrame currentFrame, JFrame newForm) {
+    currentFrame.setVisible(false);
+    newForm.setVisible(true);
+    newForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    newForm.addWindowListener(new java.awt.event.WindowAdapter() {
+        @Override
+        public void windowClosed(java.awt.event.WindowEvent e) {
+            currentFrame.setVisible(true);
+        }
+    });
+}
     private void linkProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_linkProductMouseClicked
         // TODO add your handling code here:\
          openForm(this, new Product());

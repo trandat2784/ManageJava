@@ -3,11 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI;
+import BLL.NNhaCungCapBLL;
 import com.formdev.flatlaf.FlatLightLaf;
 import javax.swing.UIManager;
 import java.awt.Color;
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 public class NhaCungCap extends javax.swing.JFrame {
 
     /**
@@ -15,8 +20,31 @@ public class NhaCungCap extends javax.swing.JFrame {
      */
     public NhaCungCap() {
         initComponents();
+        loadDataToTable();
     }
-
+    private void loadDataToTable() {
+        supplierTable.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {},
+                new String [] {
+                    "mancc", "tenncc", "email", "sdt", "diachia"
+                }
+        ));
+        NNhaCungCapBLL dao = new NNhaCungCapBLL();
+        ArrayList <DAL.NhaCungCap> list = dao.selectAll();
+        System.out.println(list.size());
+        DefaultTableModel model = (DefaultTableModel) supplierTable.getModel();
+        model.setRowCount(0); 
+        for (DAL.NhaCungCap ncc : list) {
+            System.out.println(ncc  ); // In ra Book nhờ toString()
+            model.addRow(new Object[]{
+                ncc.getMaNcc(),
+                ncc.getTenNcc(),
+                ncc.getEmail(),
+                ncc.getSdt(),
+                ncc.getDiaChi()
+            });
+        }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,11 +58,13 @@ public class NhaCungCap extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        nameSupplier = new javax.swing.JTextField();
+        phoneSupplier = new javax.swing.JTextField();
+        addressSupplier = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        emailSupplier = new javax.swing.JTextField();
+        SupplierID = new javax.swing.JLabel();
+        supplierId = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -43,7 +73,7 @@ public class NhaCungCap extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        NCCtable = new javax.swing.JTable();
+        supplierTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,20 +89,23 @@ public class NhaCungCap extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setText("Số điện thoại");
 
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        addressSupplier.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                addressSupplierActionPerformed(evt);
             }
         });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Email");
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        emailSupplier.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                emailSupplierActionPerformed(evt);
             }
         });
+
+        SupplierID.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        SupplierID.setText("Mã số");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -82,20 +115,26 @@ public class NhaCungCap extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SupplierID, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 166, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(40, 40, 40)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(supplierId, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(522, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(nameSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(phoneSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(40, 40, 40)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(emailSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(addressSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(16, 16, 16))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -104,31 +143,50 @@ public class NhaCungCap extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(nameSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(emailSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addressSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(phoneSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel4))
-                .addGap(237, 237, 237))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(SupplierID, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(supplierId, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         jButton1.setBackground(new java.awt.Color(250, 250, 250));
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jButton1.setText("Thêm");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(250, 250, 250));
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jButton2.setText("Sửa");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
 
         jButton3.setBackground(new java.awt.Color(250, 250, 250));
         jButton3.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jButton3.setText("Xóa");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -171,7 +229,7 @@ public class NhaCungCap extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        NCCtable.setModel(new javax.swing.table.DefaultTableModel(
+        supplierTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -182,7 +240,12 @@ public class NhaCungCap extends javax.swing.JFrame {
                 "ID", "Tên công ty", "Email", "Số điện thoại", "Địa chỉ"
             }
         ));
-        jScrollPane1.setViewportView(NCCtable);
+        supplierTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                supplierTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(supplierTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -215,8 +278,8 @@ public class NhaCungCap extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5)
                 .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,13 +300,13 @@ public class NhaCungCap extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void addressSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressSupplierActionPerformed
 
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_addressSupplierActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void emailSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailSupplierActionPerformed
 
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_emailSupplierActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
@@ -252,6 +315,106 @@ public class NhaCungCap extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
 
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here: add supplier
+    try{
+       String id = supplierId.getText().trim();
+        String name = nameSupplier.getText().trim();
+        String email = emailSupplier.getText().trim();
+        String phone = phoneSupplier.getText().trim();
+        String address = addressSupplier.getText().trim();
+
+      // Gọi BLL để thêm nhà cung cấp
+        NNhaCungCapBLL supplierBLL = new NNhaCungCapBLL();
+
+        // Tạo đối tượng sản phẩm
+        DAL.NhaCungCap supplier = new DAL.NhaCungCap(id, name, email, phone, address);
+
+        // Gọi BLL để thêm sản phẩm
+        boolean isSuccess = supplierBLL.insertSupplier(supplier);
+        if (isSuccess) {
+            JOptionPane.showMessageDialog(this, "Thêm sản phẩm thành công!");
+            loadDataToTable();
+        } else {
+            JOptionPane.showMessageDialog(this, "Thêm sản phẩm thất bại!");
+        }
+
+    }
+    catch (Exception e) {
+    JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage());
+    }
+            
+      
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        // TODO add your handling code here: update supplier
+       
+       try{
+        String id = supplierId.getText().trim();
+        String name = nameSupplier.getText().trim();
+        String email = emailSupplier.getText().trim();
+        String phone = phoneSupplier.getText().trim();
+        String address = addressSupplier.getText().trim();
+
+      // Gọi BLL để thêm nhà cung cấp
+        NNhaCungCapBLL supplierBLL = new NNhaCungCapBLL();
+
+        // Tạo đối tượng sản phẩm
+        DAL.NhaCungCap supplier = new DAL.NhaCungCap(id, name, email, phone, address);
+
+        // Gọi BLL để thêm sản phẩm
+        boolean isSuccess = supplierBLL.updateSupplier(supplier);
+        if (isSuccess) {
+            JOptionPane.showMessageDialog(this, "Thêm sản phẩm thành công!");
+            loadDataToTable();
+        } else {
+            JOptionPane.showMessageDialog(this, "Thêm sản phẩm thất bại!");
+        }
+
+    }
+    catch (Exception e) {
+    JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage());
+    }
+        
+    }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        // TODO add your handling code here: delete supplier
+
+        try{
+            NNhaCungCapBLL supplierBLL = new NNhaCungCapBLL();
+            boolean isSuccess = supplierBLL.deleteSupplier(supplierId.getText());
+            if(isSuccess) {
+                JOptionPane.showMessageDialog(this, "Xóa loại sản phẩm thành công!");
+                loadDataToTable(); // reload lại dữ liệu lên bảng
+            } else {
+                JOptionPane.showMessageDialog(this, "Xóa loại sản phầm  thất bại!");
+        }
+        }
+        catch (Exception e) 
+           {
+                 JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage());
+           }
+        
+        loadDataToTable();
+    }//GEN-LAST:event_jButton3MouseClicked
+
+    private void supplierTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_supplierTableMouseClicked
+        // TODO add your handling code here:
+        int selectedRow = supplierTable.getSelectedRow();
+        if (selectedRow >= 0) {
+             DefaultTableModel model = (DefaultTableModel) supplierTable.getModel();
+                 supplierId.setText(model.getValueAt(selectedRow, 0).toString());
+                 nameSupplier.setText(model.getValueAt(selectedRow, 1).toString());
+                 phoneSupplier.setText(model.getValueAt(selectedRow, 3).toString());
+                 emailSupplier.setText(model.getValueAt(selectedRow, 2).toString());
+                 addressSupplier.setText(model.getValueAt(selectedRow, 4).toString());
+           
+                 
+         }
+    }//GEN-LAST:event_supplierTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -271,7 +434,9 @@ public class NhaCungCap extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable NCCtable;
+    private javax.swing.JLabel SupplierID;
+    private javax.swing.JTextField addressSupplier;
+    private javax.swing.JTextField emailSupplier;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -285,9 +450,9 @@ public class NhaCungCap extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField nameSupplier;
+    private javax.swing.JTextField phoneSupplier;
+    private javax.swing.JTextField supplierId;
+    private javax.swing.JTable supplierTable;
     // End of variables declaration//GEN-END:variables
 }

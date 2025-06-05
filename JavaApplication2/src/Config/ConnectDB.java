@@ -17,55 +17,26 @@ import javax.swing.JOptionPane;
  * @author Ngoc
  */
 public class ConnectDB {
-<<<<<<< HEAD
-    public static Connection con = null;
 
-    // Lấy connection duy nhất (Singleton pattern đơn giản)
-    public static Connection getConnection() {
-        if (con == null) {
-            try {
-                String url = "jdbc:sqlserver://localhost:57524;databaseName=csdlqlbh;encrypt=true;trustServerCertificate=true";
-                String user = "sa";
-                String pass = "ngocngoc";
-                con = DriverManager.getConnection(url, user, pass);
-                System.out.println("Kết nối thành công!");
-            } catch (SQLException e) {
-                e.printStackTrace();
-                System.out.println("Kết nối thất bại do lỗi: " + e.getMessage());
-            }
-        }
-        return con;
-    }
 
-    // Đóng kết nối khi không cần nữa
-    public static void closeConnection() {
-        if (con != null) {
-            try {
-                con.close();
-                con = null;
-                System.out.println("Đóng kết nối thành công");
-            } catch (SQLException e) {
-                System.out.println("Lỗi đóng kết nối: " + e.getMessage());
-            }
-        }
-    }
-
-    // Test thử kết nối
-    public static void main(String[] args) {
-        Connection c = ConnectDB.getConnection(); // Gọi đúng
-    }
-=======
     
-    public static Connection getConnection() {
+
+  
+
+
+
+    
+    public  Connection getConnection() {
         Connection c = null;
         try {
             // Đăng ký SQL Server Driver với DriverManager
             DriverManager.registerDriver(new com.microsoft.sqlserver.jdbc.SQLServerDriver());
 
             // Các thông số kết nối
-            String url = "jdbc:sqlserver://127.0.0.1:1433;databaseName=csdlqlbhnt;encrypt=true;trustServerCertificate=true";
+            String url = "jdbc:sqlserver://localhost:1433;databaseName=csdlqlbhnt;encrypt=true;trustServerCertificate=true";
+
             String userName = "sa";
-            String password = "123456";
+            String password = "12345678";
 
 
             // Tạo kết nối
@@ -98,20 +69,16 @@ public class ConnectDB {
         } catch (Exception e) {
             e.printStackTrace();
         }
+       
     }
-<<<<<<< HEAD
-
->>>>>>> 790d662ec0dd5215e6006ee15ec37378f9619939
-=======
-public static void main(String[] args) {
-        Connection conn = getConnection();
-        if (conn != null) {
-            System.out.println("✅ Kết nối thành công!");
-            printInfo(conn);
-            closeConnection(conn);
-        } else {
-            System.out.println("❌ Kết nối thất bại.");
-        }
-    }
->>>>>>> 188cfc9f7430034d47d1e6eb8f6dea2a12006f9e
+// public static void main(String[] args) {
+//        Connection conn = getConnection();
+//        if (conn != null) {
+//            System.out.println("✅ Kết nối thành công!");
+//            printInfo(conn);
+//            closeConnection(conn);
+//        } else {
+//            System.out.println("❌ Kết nối thất bại.");
+//        }
+//        }
 }
