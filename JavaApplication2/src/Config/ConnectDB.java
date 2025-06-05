@@ -13,32 +13,40 @@ import java.sql.SQLException;
  * @author Ngoc
  */
 public class ConnectDB {
-       protected Connection con;
-    
-    public ConnectDB() {
-    try {
-        String url = "jdbc:sqlserver://localhost:1433;"
-                  + "databaseName=csdlqlbhnt2;"
-                  + "user=sa;"
-                  + "password=ngocngoc;"
-                  + "encrypt=true;trustServerCertificate=true";
-        this.con = DriverManager.getConnection(url);
-        
-        // Kiểm tra và in thông báo kết nối thành công/thất bại
-        System.out.println(this.con != null ? "Kết nối thành công!" : "Kết nối thất bại!");
-        
-    } catch (SQLException e) {
-        e.printStackTrace();
-        System.out.println("Kết nối thất bại do lỗi: " + e.getMessage());
+    public static Connection con = null;
+
+    // Lấy connection duy nhất (Singleton pattern đơn giản)
+    public static Connection getConnection() {
+        if (con == null) {
+            try {
+                String url = "jdbc:sqlserver://localhost:57524;databaseName=csdlqlbh;encrypt=true;trustServerCertificate=true";
+                String user = "sa";
+                String pass = "ngocngoc";
+                con = DriverManager.getConnection(url, user, pass);
+                System.out.println("Kết nối thành công!");
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("Kết nối thất bại do lỗi: " + e.getMessage());
+            }
+        }
+        return con;
     }
-}
-    
-    
-   // Thêm getter để các lớp con truy cập connection
-    public Connection getConnection() {
-        return this.con;
+
+    // Đóng kết nối khi không cần nữa
+    public static void closeConnection() {
+        if (con != null) {
+            try {
+                con.close();
+                con = null;
+                System.out.println("Đóng kết nối thành công");
+            } catch (SQLException e) {
+                System.out.println("Lỗi đóng kết nối: " + e.getMessage());
+            }
+        }
     }
+
+    // Test thử kết nối
     public static void main(String[] args) {
-    new ConnectDB(); // Tự động kiểm tra kết nối khi khởi tạo
-}
+        Connection c = ConnectDB.getConnection(); // Gọi đúng
+    }
 }

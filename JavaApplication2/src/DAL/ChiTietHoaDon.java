@@ -27,6 +27,13 @@ public class ChiTietHoaDon {
         this.donGia = donGia;
         this.tongTien = tongTien;
     }
+    public ChiTietHoaDon(String maHD, String maSanPham, int soLuong, float donGia) {
+    this.maHD = maHD;
+    this.maSanPham = maSanPham;
+    this.soLuong = soLuong;
+    this.donGia = donGia;
+}
+
 
     public String getMaChiTietHD() {
         return maChiTietHD;
@@ -39,6 +46,7 @@ public class ChiTietHoaDon {
     public String getMaHD() {
         return maHD;
     }
+
 
     public void setMaHD(String maHD) {
         this.maHD = maHD;

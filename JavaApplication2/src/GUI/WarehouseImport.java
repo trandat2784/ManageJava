@@ -4,7 +4,6 @@
  */
 package GUI;
 
-import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Color;
 import javax.swing.UIManager;
 

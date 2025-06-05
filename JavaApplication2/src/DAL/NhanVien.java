@@ -70,6 +70,10 @@ public class NhanVien {
     public String toString() {
         return "NhanVien{" + "maNv=" + maNv + ", tenNv=" + tenNv + ", email=" + email + ", sdt=" + sdt + ", diaChi=" + diaChi + '}';
     }
+
+    public String gettennv() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     
 }
