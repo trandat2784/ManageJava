@@ -82,9 +82,7 @@ public class loaisanphamBLL extends ConnectDB{
      }
      
 
-    public String getTenLoai() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
     
     
 }

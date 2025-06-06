@@ -6,10 +6,10 @@ package DAL;
 
 /**
  *
- * @author Ngoc
+ * @author Windows
  */
 public class LoaiSanPham {
-    private int maLoai ;
+     private int maLoai ;
     private String tenLoai;
 
     public LoaiSanPham(int maLoai, String tenLoai) {
@@ -40,6 +40,5 @@ public class LoaiSanPham {
     public String toString() {
         return "LoaiSanPham{" + "maLoai=" + maLoai + ", tenLoai=" + tenLoai + '}';
     }
-    
     
 }
