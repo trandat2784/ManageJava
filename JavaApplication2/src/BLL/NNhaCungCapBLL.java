@@ -10,12 +10,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-
+import javax.swing.JOptionPane;
+import java.sql.SQLException;
 /**
  *
  * @author Ngoc
  */
-public class NNhaCungCapBLL implements GDBLL<NhaCungCap> {
+public class NNhaCungCapBLL  {
     
     public static NNhaCungCapBLL getInstance() {
         return new NNhaCungCapBLL();
@@ -23,7 +24,8 @@ public class NNhaCungCapBLL implements GDBLL<NhaCungCap> {
     public ArrayList<NhaCungCap> selectAll() {
         ArrayList<NhaCungCap> ketQua = new ArrayList<NhaCungCap>();
         try {
-            Connection con = ConnectDB.getConnection();
+               ConnectDB connection= new ConnectDB();
+            Connection con = connection.getConnection();
             String sql = "SELECT * FROM NhaCungCap";
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
@@ -46,7 +48,8 @@ public class NNhaCungCapBLL implements GDBLL<NhaCungCap> {
     public NhaCungCap selectById(String t) {
         NhaCungCap ketQua = null;
         try {
-            Connection con = ConnectDB.getConnection();
+                 ConnectDB connection= new ConnectDB();
+            Connection con = connection.getConnection();
             String sql = "SELECT * FROM NhaCungCap WHERE maNcc=?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, t);
@@ -65,19 +68,62 @@ public class NNhaCungCapBLL implements GDBLL<NhaCungCap> {
         }
         return ketQua;
     }
-
-    @Override
-    public int insert(NhaCungCap t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean insertSupplier(NhaCungCap p) throws SQLException {
+        
+         ConnectDB connection= new ConnectDB();
+        Connection conn = connection.getConnection();
+        String sql = "INSERT INTO nhacungcap  (mancc,tenncc,email,sdt,diachi) VALUES ( ?, ?, ?, ?, ?)";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, p.getMaNcc());
+        ps.setString(2, p.getTenNcc());
+        ps.setString(3, p.getEmail());
+        ps.setString(4, p.getSdt());
+        ps.setString(5, p.getDiaChi());
+        int rows = ps.executeUpdate();
+        ps.close();
+        return rows > 0;
     }
-
-    @Override
-    public int update(NhaCungCap t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public int delete(NhaCungCap t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        
+        public boolean updateSupplier(NhaCungCap p) throws SQLException  {
+        ConnectDB connection = new ConnectDB();
+        Connection conn = connection.getConnection();
+        String sql = "Update nhacungcap Set tenncc=?,email=?,sdt=?,diachi=? where mancc=?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, p.getTenNcc());
+        ps.setString(2, p.getEmail());
+        ps.setString(3, p.getSdt());
+        ps.setString(4, p.getDiaChi());
+        ps.setString(5, p.getMaNcc());
+        int rows = ps.executeUpdate();
+        ps.close();
+        conn.close();  // nhớ đóng kết nối sau khi xong
+        return rows > 0;
+         
+        }
+        public boolean deleteSupplier(String maloai) throws SQLException {
+        ConnectDB connection= new ConnectDB();
+        Connection conn = connection.getConnection();
+         String sql = "DELETE FROM nhacungcap WHERE mancc=?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, maloai);
+        int rows = ps.executeUpdate();
+        ps.close();
+        conn.close();
+        return rows > 0;
+        }
+      
+//    @Override
+//    public int insert(NhaCungCap t) {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//    }
+//
+//    @Override
+//    public int update(NhaCungCap t) {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//    }
+//
+//    @Override
+//    public int delete(NhaCungCap t) {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//    }
 }

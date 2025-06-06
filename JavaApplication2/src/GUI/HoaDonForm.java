@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.lang.String;
 import java.util.Map;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -26,20 +27,21 @@ import javax.swing.JOptionPane;
 
 public class HoaDonForm extends javax.swing.JFrame {
     
-    private Map<String, String> khachHangMap = new HashMap<>();
-    private Map<String, NhanVien> nhanVienMap = new HashMap<>();
+    
 
     private HoaDonBLL hoaDonBLL = new HoaDonBLL();
     private KhachhangBushd khachHangBLL = new KhachhangBushd(); 
     private void loadTable() {
     DefaultTableModel model = new DefaultTableModel();
-    model.setColumnIdentifiers(new String[]{"Mã HĐ", "Mã KH", "Mã NV", "Ngày Lập"});
+    model.setColumnIdentifiers(new String[]{"Mã HĐ", "Mã NV","ten kh", "sdt kh", "Ngày Lập"});
 
     ArrayList<HoaDon> list = hoaDonBLL.getAllHoaDon();
     for (HoaDon hd : list) {
         model.addRow(new Object[]{
             hd.getMaHd(),
-            hd.getMaKh(),
+            hd.getMaNv(),
+            hd.getTenKh(),
+            hd.getSdtKh(),
             hd.getMaNv(),
             hd.getNgayLap()
         });
@@ -56,13 +58,13 @@ public class HoaDonForm extends javax.swing.JFrame {
         initComponents();
         loadTable();
         loadNhanVienToComboBox();
-        loadKhachHangToComboBox();
  
     }
     private void resetForm() {
     txtMaHd.setText("");
     cbNhanvienhd.setSelectedIndex(0);
-    cbKhachhanghd.setSelectedIndex(0);
+    txtTenKh.setText("");
+    txtSdtKh.setText("");
     jDateChooserHoadon.setDate(null);
 }
     // Trong class GUI của bạn
@@ -81,37 +83,7 @@ public class HoaDonForm extends javax.swing.JFrame {
             cbNhanvienhd.addItem(nv.getMaNv() + " - " + nv.getTenNv());
         }
     
-}
-   // Trong phương thức khởi tạo hoặc khi load form
-private void loadKhachHangToComboBox() {
-    
-
-       
-    try {
-        List<String> listTenKH = khachHangBLL.getAllTenKhachHang();
-
-        cbKhachhanghd.removeAllItems(); // ComboBox của khách hàng, không phải nhân viên
-        cbKhachhanghd.addItem("-- Chọn khách hàng --");
-
-        for (String tenKH : listTenKH) {
-            cbKhachhanghd.addItem(tenKH);
-        }
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-}
-
-        //model.addElement("-- Chọn khách hàng --"); // Item mặc định
-        
-//        for (String tenKH : listTenKH) {
-//            model.addElement(tenKH);
-//        }
-//        
-//        // 3. Gán model cho ComboBox
-//        cbKhachhanghd.setModel(model);
-//        cbKhachhanghd.setSelectedIndex(-1); // Không chọn gì ban đầu
-        
-    
+   }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -132,10 +104,6 @@ private void loadKhachHangToComboBox() {
         tblHoaDon = new javax.swing.JTable();
         jDateChooserHoadon = new com.toedter.calendar.JDateChooser();
         jPanel2 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
@@ -146,10 +114,9 @@ private void loadKhachHangToComboBox() {
         btnSuahd = new javax.swing.JButton();
         btnXoaHD = new javax.swing.JButton();
         btnResetHD = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
         cbNhanvienhd = new javax.swing.JComboBox<>();
-        cbKhachhanghd = new javax.swing.JComboBox<>();
+        txtTenKh = new javax.swing.JTextField();
+        txtSdtKh = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -199,14 +166,6 @@ private void loadKhachHangToComboBox() {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(" Tra cứu hóa đơn"));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel5.setText("Tìm hóa đơn theo tên khách hàng :");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 200, -1));
-
-        jLabel6.setText("Tìm hóa đơn theo tên nhân viên : ");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, -1));
-        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 220, -1));
-        jPanel2.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 220, -1));
 
         jLabel7.setText("Từ ngày : ");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 60, -1));
@@ -273,17 +232,13 @@ private void loadKhachHangToComboBox() {
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 50, 210, 190));
 
-        jButton1.setText("themkh");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, -1, 20));
-
-        jButton6.setText("themnv");
-        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 140, -1, -1));
-
-        cbNhanvienhd.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(cbNhanvienhd, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, 170, -1));
 
-        cbKhachhanghd.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(cbKhachhanghd, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 170, -1));
+        txtTenKh.setText("jTextField1");
+        jPanel1.add(txtTenKh, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 80, -1, -1));
+
+        txtSdtKh.setText("jTextField2");
+        jPanel1.add(txtSdtKh, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 940, 480));
 
@@ -291,45 +246,65 @@ private void loadKhachHangToComboBox() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btThemhdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btThemhdActionPerformed
-        // TODO add your handling code here:
-        
-    
-   
-                                                                                
-
+        // TODO add your handling code here:                                                                         
     String maHD = txtMaHd.getText().trim();
-    KhachHang selectedKH = (KhachHang) cbKhachhanghd.getSelectedItem();
-    NhanVien selectedNV = (NhanVien) cbNhanvienhd.getSelectedItem();
-    LocalDateTime ngayLap = LocalDateTime.now();
 
-    // Kiểm tra các trường bắt buộc
-    if (maHD.isEmpty() || selectedKH == null || selectedNV == null) {
-        JOptionPane.showMessageDialog(null, 
-            "Vui lòng nhập đầy đủ thông tin!", 
-            "Thiếu dữ liệu", 
-            JOptionPane.WARNING_MESSAGE);
+    // Lấy mã nhân viên từ combobox
+    Object selectedItem = cbNhanvienhd.getSelectedItem();
+    if (selectedItem == null) {
+        JOptionPane.showMessageDialog(null,
+                "Vui lòng chọn nhân viên!",
+                "Thiếu dữ liệu",
+                JOptionPane.WARNING_MESSAGE);
         return;
     }
 
-    String maKH = selectedKH.getMaKh();  // Lấy mã khách hàng từ object
-    String maNV = selectedNV.getMaNv();  // Lấy mã nhân viên từ object
+    String maNV = selectedItem.toString();
+        String String = null;
 
-    HoaDon hd = new HoaDon(maHD, maKH, maNV, ngayLap);
+    // Lấy đối tượng nhân viên từ mã nhân viên
+    NhanVien selectedNV = NhanvienBushd.getNhanVienByMa( maNV);
+    if (selectedNV == null) {
+        JOptionPane.showMessageDialog(null,
+                "Không tìm thấy thông tin nhân viên!",
+                "Lỗi",
+                JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
+    // Lấy thông tin khách hàng
+    String tenKH = txtTenKh.getText().trim();
+    String sdtKH = txtSdtKh.getText().trim();
+
+    // Ngày lập hóa đơn
+    LocalDateTime ngayLap = LocalDateTime.now();
+
+    // Kiểm tra mã hóa đơn
+    if (maHD.isEmpty()) {
+        JOptionPane.showMessageDialog(null,
+                "Vui lòng nhập mã hóa đơn!",
+                "Thiếu dữ liệu",
+                JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    // Tạo đối tượng hóa đơn
+    HoaDon hd = new HoaDon(maHD, selectedNV.getMaNv(), tenKH, sdtKH, ngayLap);
+
+    // Thêm hóa đơn vào hệ thống
     if (hoaDonBLL.insertHoaDon(hd)) {
-        JOptionPane.showMessageDialog(null, 
-            "Thêm hóa đơn thành công!", 
-            "Thành công", 
-            JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null,
+                "Thêm hóa đơn thành công!",
+                "Thành công",
+                JOptionPane.INFORMATION_MESSAGE);
         loadTable();
         resetForm();
     } else {
-        JOptionPane.showMessageDialog(null, 
-            "Thêm hóa đơn thất bại!", 
-            "Lỗi", 
-            JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null,
+                "Thêm hóa đơn thất bại!",
+                "Lỗi",
+                JOptionPane.ERROR_MESSAGE);
     }
-
 
     }//GEN-LAST:event_btThemhdActionPerformed
     
@@ -346,13 +321,16 @@ if (selectedRow != -1) {
         // 1. Lấy mã hóa đơn
         txtMaHd.setText(tblHoaDon.getValueAt(selectedRow, 0).toString());
         
-        // 2. Xử lý ComboBox khách hàng (thay thế txtkh)
-        String maKH = tblHoaDon.getValueAt(selectedRow, 1).toString();
-        setSelectedKhachHangInComboBox(cbKhachhanghd, maKH);
+        
         
         // 3. Xử lý ComboBox nhân viên
         String maNV = tblHoaDon.getValueAt(selectedRow, 2).toString();
         setSelectedNhanVienInComboBox(cbNhanvienhd, maNV);
+        
+                txtTenKh.setText(tblHoaDon.getValueAt(selectedRow, 0).toString());
+        txtSdtKh.setText(tblHoaDon.getValueAt(selectedRow, 0).toString());
+
+        
         
         // 4. Xử lý ngày lập
         Object obj = tblHoaDon.getValueAt(selectedRow, 3);
@@ -404,20 +382,20 @@ private void setSelectedKhachHangInComboBox(JComboBox<String> comboBox, String m
     private void btnSuahdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSuahdMouseClicked
         // TODO add your handling code here:
           String maHD = txtMaHd.getText().trim();
-        KhachHang selectedKH = (KhachHang) cbKhachhanghd.getSelectedItem();
+          
         NhanVien selectedNV = (NhanVien) cbNhanvienhd.getSelectedItem();
+                  String tenKH = txtTenKh.getText().trim();
+          String sdtKH = txtSdtKh.getText().trim();
+
         
-        if (maHD.isEmpty() || selectedKH == null || selectedKH.getMaKh().isEmpty() || 
+        if (maHD.isEmpty() ||
             selectedNV == null || selectedNV.getMaNv().isEmpty() || jDateChooserHoadon.getDate() == null) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!", 
                 "Thiếu dữ liệu", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        HoaDon hd = new HoaDon(
-            maHD, 
-            selectedKH.getMaKh(), 
-            selectedNV.getMaNv(), 
+        HoaDon hd = new HoaDon(maHD, selectedNV.getMaNv(), tenKH,sdtKH,
             new java.sql.Timestamp(jDateChooserHoadon.getDate().getTime()).toLocalDateTime()
         );
 
@@ -567,11 +545,8 @@ private void setSelectedKhachHangInComboBox(JComboBox<String> comboBox, String m
     private javax.swing.JButton btnResetHD;
     private javax.swing.JButton btnSuahd;
     private javax.swing.JButton btnXoaHD;
-    private javax.swing.JComboBox<String> cbKhachhanghd;
     private javax.swing.JComboBox<String> cbNhanvienhd;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private com.toedter.calendar.JDateChooser jDateChooserHoadon;
@@ -579,18 +554,16 @@ private void setSelectedKhachHangInComboBox(JComboBox<String> comboBox, String m
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTable tblHoaDon;
     private javax.swing.JTextField txtMaHd;
+    private javax.swing.JTextField txtSdtKh;
+    private javax.swing.JTextField txtTenKh;
     // End of variables declaration//GEN-END:variables
 
     

@@ -22,29 +22,31 @@ public class HoaDonBLL extends ConnectDB {
  private Connection con;
 
     public HoaDonBLL() {
-        con = ConnectDB.getConnection(); // Gán kết nối cho biến con
+        ConnectDB connection= new ConnectDB();
+        Connection con = connection.getConnection();
     }
 
     public ArrayList<HoaDon> getAllHoaDon() {
+         ConnectDB connection= new ConnectDB();
+        Connection con = connection.getConnection();
         ArrayList<HoaDon> list = new ArrayList<>();
         String sql = "SELECT * FROM hoadon";
 
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                HoaDon hd = new HoaDon(
-                    rs.getString("maHD"),
-                    rs.getString("maKH"),
-                    rs.getString("maNV"),
-                    rs.getTimestamp("ngayLap").toLocalDateTime()
-                );
-                list.add(hd);
+            try (PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+                
+                while (rs.next()) {
+                    HoaDon hd = new HoaDon(
+                            rs.getString("maHD"),
+                            rs.getString("manv"),
+                            rs.getString("tenKh"),
+                            rs.getString("sdtKh"),
+                            rs.getTimestamp("ngayLap").toLocalDateTime()
+                    );
+                    list.add(hd);
+                }
+                
             }
-
-            rs.close();
-            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -53,13 +55,15 @@ public class HoaDonBLL extends ConnectDB {
     }
      // Thêm hóa đơn
     public boolean insertHoaDon(HoaDon hd) {
-        String sql = "INSERT INTO hoadon (maHD, maKH, maNV, ngayLap) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO hoadon (maHD, maNV,tenKh, sdtKh, ngayLap) VALUES (?, ?, ?, ?,?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, hd.getMaHd());
-            ps.setString(2, hd.getMaKh());
-            ps.setString(3, hd.getMaNv());
-            ps.setTimestamp(4, Timestamp.valueOf(hd.getNgayLap()));
+            ps.setString(2, hd.getMaNv());
+            ps.setString(3, hd.getTenKh());
+            ps.setString(4, hd.getSdtKh());
+            
+            ps.setTimestamp(5, Timestamp.valueOf(hd.getNgayLap()));
 
             int rows = ps.executeUpdate();
             ps.close();
@@ -88,13 +92,14 @@ public class HoaDonBLL extends ConnectDB {
 
     // Sửa hóa đơnp
     public boolean updateHoaDon(HoaDon hd) {
-        String sql = "UPDATE hoadon SET maKH = ?, maNV = ?, ngayLap = ? WHERE maHD = ?";
+        String sql = "UPDATE hoadon SET  maNV = ?,tenKh=?, sdtKh=?, ngayLap = ? WHERE maHD = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, hd.getMaKh());
-            ps.setString(2, hd.getMaNv());
-            ps.setTimestamp(3, Timestamp.valueOf(hd.getNgayLap()));
-            ps.setString(4, hd.getMaHd());
+            ps.setString(1, hd.getMaNv());
+            ps.setString(2, hd.getTenKh());
+            ps.setString(3, hd.getSdtKh());
+            ps.setTimestamp(4, Timestamp.valueOf(hd.getNgayLap()));
+            ps.setString(5, hd.getMaHd());
 
             int rows = ps.executeUpdate();
             ps.close();
@@ -104,39 +109,8 @@ public class HoaDonBLL extends ConnectDB {
             return false;
         }
     }
-    // Kiểm tra mã khách hàng có tồn tại
-public boolean isMaKhExist(String maKH) {
-    String sql = "SELECT 1 FROM khachhang WHERE maKH = ?";
-    try {
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setString(1, maKH);
-        ResultSet rs = ps.executeQuery();
-        boolean exists = rs.next();
-        rs.close();
-        ps.close();
-        return exists;
-    } catch (SQLException e) {
-        e.printStackTrace();
-        return false;
-    }
-}
+    
 
-// Kiểm tra mã nhân viên có tồn tại
-public boolean isMaNvExist(String maNV) {
-    String sql = "SELECT 1 FROM nhanvien WHERE maNV = ?";
-    try {
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setString(1, maNV);
-        ResultSet rs = ps.executeQuery();
-        boolean exists = rs.next();
-        rs.close();
-        ps.close();
-        return exists;
-    } catch (SQLException e) {
-        e.printStackTrace();
-        return false;
-    }
-}
 }
 
 

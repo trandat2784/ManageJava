@@ -20,7 +20,8 @@ import java.util.ArrayList;
 public class NSanPhamBLL extends ConnectDB {
     
     public ArrayList<SanPham> docsanpham() {
-        Connection con = ConnectDB.getConnection();
+        ConnectDB connection= new ConnectDB();
+        Connection con = connection.getConnection();
         ArrayList<SanPham> arrsp = new ArrayList<>();
         try (Statement statement = con.createStatement();
              ResultSet result = statement.executeQuery("SELECT * FROM sanpham")) {
@@ -44,7 +45,8 @@ public class NSanPhamBLL extends ConnectDB {
     }
     
     public ArrayList<SanPham> docdanhsachsanphamtheodm(String tenloai) {
-        Connection con = ConnectDB.getConnection();
+ConnectDB connection= new ConnectDB();
+        Connection con = connection.getConnection();
         ArrayList<SanPham> dssp = new ArrayList<SanPham>();
         try {
             String sql = "SELECT sp.* FROM sanpham sp " +
@@ -72,8 +74,9 @@ public class NSanPhamBLL extends ConnectDB {
     }
     
     public ArrayList<SanPham> timkiemtheoten(String tensanpham) {
-        Connection con = ConnectDB.getConnection();
-    ArrayList<SanPham> dssp = new ArrayList<SanPham>();
+        ConnectDB connection= new ConnectDB();
+        Connection con = connection.getConnection();
+        ArrayList<SanPham> dssp = new ArrayList<SanPham>();
     try {
         String sql = "SELECT * FROM sanpham where tensanpham like N'" + tensanpham + "%'";
         Statement statement = con.createStatement();
@@ -97,7 +100,8 @@ public class NSanPhamBLL extends ConnectDB {
 }
        
     public ArrayList<SanPham> selectAllExist() {
-        Connection con = ConnectDB.getConnection();
+        ConnectDB connection= new ConnectDB();
+        Connection con = connection.getConnection();
         ArrayList<SanPham> ketQua = new ArrayList<SanPham>();
         try {
             String sql = "SELECT masanpham, tensanpham, maloai, mancc, gia, soluongton, duongdananh FROM sanpham";
@@ -138,7 +142,8 @@ public class NSanPhamBLL extends ConnectDB {
     }
     
     public SanPham selectById(String t) {
-        Connection con = ConnectDB.getConnection();
+        ConnectDB connection= new ConnectDB();
+        Connection con = connection.getConnection();
         SanPham ketQua = null;
         try {
             String sql = "SELECT masanpham, tensanpham, maloai, mancc, gia, soluongton, duongdananh FROM SanPham WHERE maSanPham = ?";
@@ -163,7 +168,8 @@ public class NSanPhamBLL extends ConnectDB {
         return ketQua;
     }
     public int updateSoLuong(String maSanPham, int soLuongTon) {
-        Connection con = ConnectDB.getConnection();
+        ConnectDB connection= new ConnectDB();
+        Connection con = connection.getConnection();
         int ketQua = 0;
         try {
             String sql = "UPDATE SanPham SET soLuongTon=? WHERE maSanPham=? ";

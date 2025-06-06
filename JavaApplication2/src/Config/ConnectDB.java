@@ -17,14 +17,27 @@ import javax.swing.JOptionPane;
  * @author Ngoc
  */
 public class ConnectDB {
+<<<<<<< HEAD
     public static Connection getConnection() {
+=======
+
+
+    
+
+    public  Connection getConnection() {
+>>>>>>> 23844c0a77fbe22d344d431826a308c164c0a266
         Connection c = null;
         try {
             // Đăng ký SQL Server Driver với DriverManager
             DriverManager.registerDriver(new com.microsoft.sqlserver.jdbc.SQLServerDriver());
 
             // Các thông số kết nối
+<<<<<<< HEAD
             String url = "jdbc:sqlserver://localhost:1433;databaseName=csdlqlbhnt;encrypt=false;trustServerCertificate=true";
+=======
+            String url = "jdbc:sqlserver://localhost:1433;databaseName=nhom6csdl;encrypt=true;trustServerCertificate=true";
+
+>>>>>>> 23844c0a77fbe22d344d431826a308c164c0a266
             String userName = "sa";
             String password = "12345678";
 
@@ -59,9 +72,18 @@ public class ConnectDB {
         } catch (Exception e) {
             e.printStackTrace();
         }
+<<<<<<< HEAD
     }
 //public static void main(String[] args) {
 //        Connection conn = getConnection();
+=======
+       
+    }}
+// public static void main(String[] args) {
+//        //Connection conn = getConnection();
+//        ConnectDB connection= new ConnectDB();
+//           Connection conn = connection.getConnection();
+>>>>>>> 23844c0a77fbe22d344d431826a308c164c0a266
 //        if (conn != null) {
 //            System.out.println("✅ Kết nối thành công!");
 //            printInfo(conn);
@@ -69,5 +91,10 @@ public class ConnectDB {
 //        } else {
 //            System.out.println("❌ Kết nối thất bại.");
 //        }
+<<<<<<< HEAD
 //    }
 }
+=======
+//        }
+//}
+>>>>>>> 23844c0a77fbe22d344d431826a308c164c0a266

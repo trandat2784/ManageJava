@@ -18,7 +18,8 @@ public class NChiTietPhieuNhapBLL extends ConnectDB {
     }
 
     public int insert(ChiTietPhieuNhap t) {
-        Connection con = ConnectDB.getConnection();
+        ConnectDB connection= new ConnectDB();
+        Connection con = connection.getConnection();
         int ketQua = 0;
         try {
             String sql = "INSERT INTO ChiTietPhieuNhap (maPhieu, maSanPham, soLuong, donGia) VALUES (?,?,?,?)";
@@ -37,7 +38,8 @@ public class NChiTietPhieuNhapBLL extends ConnectDB {
     }
     
     public ArrayList<ChiTietPhieuNhap> selectAll(String t) {
-         Connection con = ConnectDB.getConnection();
+         ConnectDB connection= new ConnectDB();
+         Connection con = connection.getConnection();
         ArrayList<ChiTietPhieuNhap> ketQua = new ArrayList<ChiTietPhieuNhap>();
         try {
             String sql = "SELECT * FROM ChiTietPhieuNhap WHERE maPhieu=?";
@@ -61,7 +63,8 @@ public class NChiTietPhieuNhapBLL extends ConnectDB {
     }
 
     public ArrayList<ChiTietPhieuNhap> selectAll() {
-        Connection con = ConnectDB.getConnection();
+        ConnectDB connection= new ConnectDB();
+        Connection con = connection.getConnection();
         ArrayList<ChiTietPhieuNhap> ketQua = new ArrayList<ChiTietPhieuNhap>();
         try {
             String sql = "SELECT * FROM ChiTietPhieuNhap";
@@ -83,7 +86,8 @@ public class NChiTietPhieuNhapBLL extends ConnectDB {
     }
     
     public int update(ChiTietPhieuNhap t) {
-        Connection con = ConnectDB.getConnection();
+        ConnectDB connection= new ConnectDB();
+        Connection con = connection.getConnection();
         int ketQua = 0;
         try {
             String sql = "UPDATE ChiTietPhieuNhap SET maPhieu=?, maSanPham=?, soLuong=?, donGia = ?  WHERE maPhieu=? AND maSanPham=?";
@@ -102,7 +106,8 @@ public class NChiTietPhieuNhapBLL extends ConnectDB {
     }
 
     public int delete(ChiTietPhieuNhap t) {
-        Connection con = ConnectDB.getConnection();
+        ConnectDB connection= new ConnectDB();
+        Connection con = connection.getConnection();
         int ketQua = 0;
         try {
             String sql = "DELETE FROM ChiTietPhieuNhap WHERE maPhieu=?";
@@ -118,7 +123,8 @@ public class NChiTietPhieuNhapBLL extends ConnectDB {
     }
     
     public ChiTietPhieuNhap selectById(String t) {
-        Connection con = ConnectDB.getConnection();
+        ConnectDB connection= new ConnectDB();
+        Connection con = connection.getConnection();
         ChiTietPhieuNhap ketQua = null;
         try {
             String sql = "SELECT * FROM ChiTietPhieuNhap WHERE maPhieu=?";

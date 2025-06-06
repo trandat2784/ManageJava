@@ -8,20 +8,101 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import com.formdev.flatlaf.FlatLightLaf;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 /**
  *
  * @author Windows
  */
 public class Home extends javax.swing.JFrame {
-
+     
     /**
      * Creates new form Home
      */
     public Home() {
-        initComponents();
-    }
-
+        initComponents();}
+//        ImageLabel.setIcon(resizeImage("D:\\DuAnMonJava\\ManageJava\\JavaApplication2\\src\\icon\\fine-home-interior-living-room-picture-wallpaper-2560x1080_14.jpg", 654, 300));
+//ImageLabel.setText("");
+// linkProduct.addMouseListener(new java.awt.event.MouseAdapter() {
+//    @Override
+//    public void mouseEntered(java.awt.event.MouseEvent evt) {
+//        linkProduct.setOpaque(true);  // phải bật opaque để đổi màu nền
+//        linkProduct.setBackground(new Color(100, 149, 237)); // màu xanh nhạt
+//        linkProduct.setForeground(Color.WHITE); // đổi màu chữ
+//    }
+//
+//    @Override
+//    public void mouseExited(java.awt.event.MouseEvent evt) {
+//        linkProduct.setOpaque(false);
+//        linkProduct.setBackground(new Color(204, 204, 204)); // màu nền cũ của panel
+//        linkProduct.setForeground(Color.BLACK); // màu chữ mặc định
+//    }
+//});
+//   linkCategory1.addMouseListener(new java.awt.event.MouseAdapter() {
+//    @Override
+//    public void mouseEntered(java.awt.event.MouseEvent evt) {
+//        linkCategory1.setOpaque(true);
+//        linkCategory1.setBackground(new Color(100, 149, 237));
+//        linkCategory1.setForeground(Color.WHITE);
+//    }
+//
+//    @Override
+//    public void mouseExited(java.awt.event.MouseEvent evt) {
+//        linkCategory1.setOpaque(false);
+//        linkCategory1.setBackground(new Color(204, 204, 204));
+//        linkCategory1.setForeground(Color.BLACK);
+//    }
+//});
+//   linkCategory.addMouseListener(new java.awt.event.MouseAdapter() {
+//    @Override
+//    public void mouseEntered(java.awt.event.MouseEvent evt) {
+//        linkCategory.setOpaque(true);
+//        linkCategory.setBackground(new Color(100, 149, 237));
+//        linkCategory.setForeground(Color.WHITE);
+//    }
+//
+//    @Override
+//    public void mouseExited(java.awt.event.MouseEvent evt) {
+//        linkCategory.setOpaque(false);
+//        linkCategory.setBackground(new Color(204, 204, 204));
+//        linkCategory.setForeground(Color.BLACK);
+//    }
+//});
+//   linkCategory2.addMouseListener(new java.awt.event.MouseAdapter() {
+//    @Override
+//    public void mouseEntered(java.awt.event.MouseEvent evt) {
+//        linkCategory2.setOpaque(true);
+//        linkCategory2.setBackground(new Color(100, 149, 237));
+//        linkCategory2.setForeground(Color.WHITE);
+//    }
+//
+//    @Override
+//    public void mouseExited(java.awt.event.MouseEvent evt) {
+//        linkCategory2.setOpaque(false);
+//        linkCategory2.setBackground(new Color(204, 204, 204));
+//        linkCategory2.setForeground(Color.BLACK);
+//    }
+//});
+//    }
+//private ImageIcon resizeImage(String imagePath, int width, int height) {
+//    ImageIcon originalIcon = new ImageIcon(imagePath);
+//    Image img = originalIcon.getImage();
+//    Image resizedImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+//    return new ImageIcon(resizedImg);
+//}
+//
+//   private ImageIcon resizeIcon(String path, int width, int height) {
+//        // Lấy ảnh từ resource folder
+//        ImageIcon icon = new ImageIcon(getClass().getResource(path));
+//        Image img = icon.getImage();
+//        Image resizedImage = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+//        return new ImageIcon(resizedImage);
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,14 +112,38 @@ public class Home extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         linkProduct = new javax.swing.JLabel();
         linkCategory = new javax.swing.JLabel();
         linkCategory1 = new javax.swing.JLabel();
         linkCategory2 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel2.setBackground(new java.awt.Color(45, 45, 101));
+        jPanel2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel2MouseDragged(evt);
+            }
+        });
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 27)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("QUẢN LÍ CỬA HÀNG NỘI THẤT THÔNG MINH ");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, -1, -1));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 80));
+
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        linkProduct.setBackground(new java.awt.Color(33, 47, 61));
+        linkProduct.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         linkProduct.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         linkProduct.setText("Sản phẩm");
         linkProduct.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -47,6 +152,8 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
+        linkCategory.setBackground(new java.awt.Color(33, 47, 61));
+        linkCategory.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         linkCategory.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         linkCategory.setText("Nhập hàng");
         linkCategory.setToolTipText("");
@@ -56,9 +163,13 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
+        linkCategory1.setBackground(new java.awt.Color(33, 47, 61));
+        linkCategory1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         linkCategory1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         linkCategory1.setText("Danh mục ");
 
+        linkCategory2.setBackground(new java.awt.Color(33, 47, 61));
+        linkCategory2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         linkCategory2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         linkCategory2.setText("Phiếu nhập");
         linkCategory2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -71,44 +182,44 @@ public class Home extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(linkProduct, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-            .addComponent(linkCategory, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-            .addComponent(linkCategory1, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-            .addComponent(linkCategory2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+            .addComponent(linkProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(linkCategory1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(linkCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(linkCategory2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(linkProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(linkCategory1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(linkCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(linkCategory2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(linkProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(linkCategory1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(linkCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(linkCategory2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(144, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 483, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(66, 66, 66)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 75, -1, 420));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ngoc\\OneDrive\\Pictures\\home.png")); // NOI18N
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    b
+  
+  private void openForm(JFrame currentFrame, JFrame newForm) {
+    currentFrame.setVisible(false);
+    newForm.setVisible(true);
+    newForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    newForm.addWindowListener(new java.awt.event.WindowAdapter() {
+        @Override
+        public void windowClosed(java.awt.event.WindowEvent e) {
+            currentFrame.setVisible(true);
+        }
+    });
+            }
     private void linkProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_linkProductMouseClicked
         // TODO add your handling code here:\
          openForm(this, new Product());
@@ -132,6 +243,10 @@ public class Home extends javax.swing.JFrame {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_linkCategory2MouseClicked
+
+    private void jPanel2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseDragged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel2MouseDragged
 
     /**
      * @param args the command line arguments
@@ -159,7 +274,8 @@ public class Home extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
+              FlatLightLaf.setup();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -169,7 +285,10 @@ public class Home extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel linkCategory;
     private javax.swing.JLabel linkCategory1;
     private javax.swing.JLabel linkCategory2;

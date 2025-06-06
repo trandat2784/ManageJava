@@ -18,7 +18,9 @@ public class SanphamBusct {
 
     // Constructor: khởi tạo kết nối
     public SanphamBusct() {
-        con = ConnectDB.getConnection();
+        ConnectDB connection= new ConnectDB();
+        Connection con = connection.getConnection();
+        //con = ConnectDB.getConnection();
     }
 
     // Lấy danh sách tất cả sản phẩm
@@ -53,7 +55,9 @@ public class SanphamBusct {
 
     public ArrayList<SanPham> getSanPhamByLoai(String tenLoai) {
     ArrayList<SanPham> list = new ArrayList<>();
-    Connection con = ConnectDB.getConnection();
+    ConnectDB connection= new ConnectDB();
+        Connection con = connection.getConnection();
+    //Connection con = ConnectDB.getConnection();
     String sql = "SELECT * FROM SanPham s JOIN LoaiSanPham l ON s.maLoai = l.maLoai WHERE l.tenLoai = ?";
 
     try {
@@ -136,12 +140,14 @@ public class SanphamBusct {
     return sp;
 }
 
-public static int getSoLuongSanPham(String maSP) {
+    public  int getSoLuongSanPham(String maSP)  {
         int soLuong = 0;
         String query = "SELECT SoLuong FROM SanPham WHERE MaSP = ?";
-        try (Connection conn = ConnectDB.getConnection();
-             PreparedStatement ps = conn.prepareStatement(query)) {
-            ps.setString(1, maSP);
+        try {
+        ConnectDB connection= new ConnectDB();
+        Connection con = connection.getConnection();
+        PreparedStatement ps = con.prepareStatement(query);
+         ps.setString(1, maSP);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 soLuong = rs.getInt("SoLuong");
@@ -155,12 +161,15 @@ public static int getSoLuongSanPham(String maSP) {
     // Hàm cập nhật số lượng sản phẩm
     public boolean updateSoLuong(String maSP, int soLuongMoi) {
         String query = "UPDATE SanPham SET SoLuong = ? WHERE MaSP = ?";
-        try (Connection conn = ConnectDB.getConnection();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+        try {
+               ConnectDB connection= new ConnectDB();
+        Connection con = connection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, soLuongMoi);
             ps.setString(2, maSP);
             return ps.executeUpdate() > 0;
-        } catch (Exception e) {
+        } 
+             catch (Exception e) {
             e.printStackTrace();
             return false;
         }

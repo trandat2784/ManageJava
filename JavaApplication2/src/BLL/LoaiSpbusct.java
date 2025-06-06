@@ -15,7 +15,8 @@ public class LoaiSpbusct {
 
     public LoaiSpbusct() {
         try {
-            con = ConnectDB.getConnection();
+               ConnectDB connection= new ConnectDB();
+        Connection con = connection.getConnection();
         } catch (Exception e) {
             e.printStackTrace();
         }

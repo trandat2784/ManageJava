@@ -1,89 +1,137 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package BLL;
 
 import Config.ConnectDB;
 import DAL.NhanVien;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import GUI.QuanLyNhanVien;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
-import DAL.TSXnhanvienDAL;
+import javax.swing.table.DefaultTableModel;
 
 public class TSXnhanvienBLL {
-     private TSXnhanvienDAL dal;
-     public TSXnhanvienBLL() {
-        dal = new TSXnhanvienDAL();
+
+    public List<NhanVien> getAllNhanVien() throws SQLException {
+        ConnectDB connection = new ConnectDB();
+        Connection conn = connection.getConnection();
+        if (conn == null) {
+            System.out.println("❌ Kết nối thất bại, conn = null tại getAllNhanVien");
+            return new ArrayList<>();
+        }
+
+        String sql = "SELECT * FROM nhanvien";
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(sql);
+        List<NhanVien> nhanvienList = new ArrayList<>();
+
+        while (rs.next()) {
+            NhanVien nv = new NhanVien(
+                rs.getString("manv"),
+                rs.getString("tennv"),
+                rs.getString("email"),
+                rs.getString("sdt"),
+                rs.getString("diachi")
+            );
+            nhanvienList.add(nv);
+        }
+
+        System.out.println("📘 Danh sách nhân viên size: " + nhanvienList.size());
+
+        rs.close();
+        stmt.close();
+        conn.close();
+
+        return nhanvienList;
     }
 
-    // Lấy danh sách tất cả nhân viên
-    public List<NhanVien> getAllNhanVien() {
-        return dal.getAllNhanVien();
+    public boolean insertNhanVien(NhanVien nv) throws SQLException {
+        ConnectDB connection = new ConnectDB();
+        Connection conn = connection.getConnection();
+        if (conn == null) return false;
+
+        String sql = "INSERT INTO nhanvien (manv, tennv, email, sdt, diachi) VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, nv.getMaNv());
+        ps.setString(2, nv.getTenNv());
+        ps.setString(3, nv.getEmail());
+        ps.setString(4, nv.getSdt());
+        ps.setString(5, nv.getDiaChi());
+
+        int rows = ps.executeUpdate();
+        ps.close();
+        conn.close();
+
+        return rows > 0;
+    }
+
+    public boolean updateNhanVien(NhanVien nv) throws SQLException {
+        ConnectDB connection = new ConnectDB();
+        Connection conn = connection.getConnection();
+        if (conn == null) return false;
+
+        String sql = "UPDATE nhanvien SET tennv=?, email=?, sdt=?, diachi=? WHERE manv=?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, nv.getTenNv());
+        ps.setString(2, nv.getEmail());
+        ps.setString(3, nv.getSdt());
+        ps.setString(4, nv.getDiaChi());
+        ps.setString(5, nv.getMaNv());
+
+        int rows = ps.executeUpdate();
+        ps.close();
+        conn.close();
+
+        return rows > 0;
+    }
+
+    public boolean deleteNhanVien(String manv) throws SQLException {
+        ConnectDB connection = new ConnectDB();
+        Connection conn = connection.getConnection();
+        if (conn == null) return false;
+
+        String sql = "DELETE FROM nhanvien WHERE manv=?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, manv);
+
+        int rows = ps.executeUpdate();
+        ps.close();
+        conn.close();
+
+        return rows > 0;
     }
     
-    
+    public List<NhanVien> searchNhanVien(String keyword) throws SQLException {
+    ConnectDB connection = new ConnectDB();
+    Connection conn = connection.getConnection();
+    List<NhanVien> result = new ArrayList<>();
+    if (conn == null) return result;
 
-     // Thêm nhân viên
-    public boolean addNhanVien(NhanVien nv) {
-        String sql = "INSERT INTO NhanVien (MaNV, TenNV, Email, SDT, DiaChi) VALUES (?, ?, ?, ?, ?)";
+    String sql = "SELECT * FROM nhanvien WHERE manv LIKE ? OR tennv LIKE ?";
+    PreparedStatement ps = conn.prepareStatement(sql);
+    String pattern = "%" + keyword + "%";
+    ps.setString(1, pattern);
+    ps.setString(2, pattern);
 
-        try (Connection conn = ConnectDB.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, nv.getMaNv());
-            stmt.setString(2, nv.getTenNv());
-            stmt.setString(3, nv.getEmail());
-            stmt.setString(4, nv.getSdt());
-            stmt.setString(5, nv.getDiaChi());
-
-            return stmt.executeUpdate() > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
+    ResultSet rs = ps.executeQuery();
+    while (rs.next()) {
+        NhanVien nv = new NhanVien(
+            rs.getString("manv"),
+            rs.getString("tennv"),
+            rs.getString("email"),
+            rs.getString("sdt"),
+            rs.getString("diachi")
+        );
+        result.add(nv);
     }
+    rs.close();
+    ps.close();
+    conn.close();
 
-    // Sửa thông tin nhân viên
-    public boolean updateNhanVien(NhanVien nv) {
-        String sql = "UPDATE NhanVien SET TenNV = ?, Email = ?, SDT = ?, DiaChi = ? WHERE MaNV = ?";
-
-        try (Connection conn = ConnectDB.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, nv.getTenNv());
-            stmt.setString(2, nv.getEmail());
-            stmt.setString(3, nv.getSdt());
-            stmt.setString(4, nv.getDiaChi());
-            stmt.setString(5, nv.getMaNv());
-
-            return stmt.executeUpdate() > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    // Xóa nhân viên
-    public boolean deleteNhanVien(String maNv) {
-        String sql = "DELETE FROM NhanVien WHERE MaNV = ?";
-
-        try (Connection conn = ConnectDB.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, maNv);
-            return stmt.executeUpdate() > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-   
+    return result;
 }
-    
+
+
+}
 

@@ -53,7 +53,7 @@ public class ProductBLL {
     public boolean insertProduct(SanPham p) throws SQLException {
         ConnectDB connection= new ConnectDB();
         Connection conn = connection.getConnection();
-        String sql = "INSERT INTO sanpham  (masanpham,tensanpham,maloai,mancc,gia,soluongton,duongdananh) VALUES ( ?, ?, ?, ?, ?, ?,?)";
+        String sql = "INSERT INTO sanpham (masanpham,tensanpham,maloai,mancc,gia,soluongton,duongdananh) VALUES ( ?, ?, ?, ?, ?, ?,?)";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, p.getMaSanPham());
         ps.setString(2, p.getTenSanPham());
